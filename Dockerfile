@@ -2,8 +2,8 @@ FROM python:latest
 
 RUN pip install cpplint clang-format
 
-COPY lint.sh .
+COPY lint.sh /lint.sh
 
-RUN chmod +x lint.sh
+RUN chmod +x /lint.sh
 
-CMD [ "lint.sh" ]
+ENTRYPOINT [ "/lint.sh" ]
