@@ -15,7 +15,7 @@ Types of Contributions
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/USERNAME/REPO/issues.
+Report bugs at https://github.com/bowentan/glob-linters/issues.
 
 If you are reporting a bug, please include:
 
@@ -43,7 +43,7 @@ Write Documentation
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
-The best way to send feedback is to file an issue at https://github.com/USERNAME/REPO/issues.
+The best way to send feedback is to file an issue at https://github.com/bowentan/glob-linters/issues.
 
 If you are proposing a feature:
 

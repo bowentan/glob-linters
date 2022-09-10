@@ -5,7 +5,7 @@ Credits
 Development Lead
 ----------------
 
-* NAME <EMAIL>
+* Bowen Tan <bowentan78@gmail.com>
 
 Contributors
 ------------

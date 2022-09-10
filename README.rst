@@ -1,5 +1,5 @@
 =========
-REPO_NAME
+glob-linters
 =========
 
 * TODO

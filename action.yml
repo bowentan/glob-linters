@@ -1,0 +1,6 @@
+name: "glob-linters"
+author: "bowentan"
+description: "Glob linters for linting multiple languages"
+runs:
+  using: docker
+  image: "Dockerfile"
