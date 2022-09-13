@@ -1,0 +1,18 @@
+{
+    "esbonio.sphinx.confDir": "",
+    "editor.formatOnType": true,
+    "python.linting.mypyEnabled": true,
+    "mypy.runUsingActiveInterpreter": true,
+    "python.formatting.provider": "black",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "editor.rulers": [88],
+    "flake8.args": [
+        "--max-line-length=88"
+    ],
+    "[dockerfile]": {
+        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    },
+    "autoDocstring.docstringFormat": "numpy",
+}

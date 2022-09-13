@@ -2,7 +2,7 @@
 History
 =======
 
-VERSION (DATE)
+0.1.0 (2022-09-12)
 ------------------
 
-* MESSAGE
+* First release on PyPI.
