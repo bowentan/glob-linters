@@ -6,6 +6,7 @@ RUN apk add --no-cache \
     bash=5.1.16-r2 \
     ca-certificates=20220614-r0 \
     cargo=1.60.0-r2 \
+    cmake=3.23.1-r0 \
     coreutils=9.1-r0 \
     curl=7.83.1-r3 \
     file=5.41-r0 \
@@ -31,10 +32,9 @@ RUN apk add --no-cache \
     zlib=1.2.12-r3 \
     zlib-dev=1.2.12-r3
 
-WORKDIR /glob-linters
+# hadolint ignore=DL3059
+RUN pip install --no-cache-dir clang-format==14.0.6 cpplint==
+# hadolint ignore=DL3059
+RUN pip install --no-cache-dir glob-linters==0.1.0
 
-COPY . .
-
-RUN pip install --no-cache-dir -r requirements.txt
-
-ENTRYPOINT [ "glob-linters" ]
+# ENTRYPOINT [ "glob_linters" ]
