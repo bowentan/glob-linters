@@ -58,6 +58,10 @@ jobs:
       id-token: write
 
     steps:
+      - name: Wait PyPi update
+        run: |
+          sleep 60s
+
       - name: Checkout repository
         uses: actions/checkout@v3
 
