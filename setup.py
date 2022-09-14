@@ -45,7 +45,7 @@ setup(
     packages=find_packages(include=["glob_linters", "glob_linters.*"]),
     test_suite="tests",
     tests_require=test_requirements,
-    url="https://github.com/bowentan/glob_linters",
+    url="https://github.com/bowentan/glob-linters",
     version="0.1.0-alpha.7",
     zip_safe=False,
 )
