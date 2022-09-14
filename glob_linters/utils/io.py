@@ -7,27 +7,27 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 
-class CustomFormatter(logging.Formatter):
-    grey = "\x1b[38;20m"
-    yellow = "\x1b[33;20m"
-    cyan = "\x1b[36:20m"
-    red = "\x1b[31;20m"
-    bold_red = "\x1b[31;1m"
-    reset = "\x1b[0m"
-    cformat = "%(asctime)s - [%(levelname)s] : %(message)s"
+# class CustomFormatter(logging.Formatter):
+#     grey = "\x1b[38;20m"
+#     yellow = "\x1b[33;20m"
+#     cyan = "\x1b[36:20m"
+#     red = "\x1b[31;20m"
+#     bold_red = "\x1b[31;1m"
+#     reset = "\x1b[0m"
+#     cformat = "%(asctime)s - [%(levelname)s] : %(message)s"
 
-    FORMATS = {
-        logging.DEBUG: cyan + cformat + reset,
-        logging.INFO: grey + cformat + reset,
-        logging.WARNING: yellow + cformat + reset,
-        logging.ERROR: red + cformat + reset,
-        logging.CRITICAL: bold_red + cformat + reset,
-    }
+#     FORMATS = {
+#         logging.DEBUG: cyan + cformat + reset,
+#         logging.INFO: grey + cformat + reset,
+#         logging.WARNING: yellow + cformat + reset,
+#         logging.ERROR: red + cformat + reset,
+#         logging.CRITICAL: bold_red + cformat + reset,
+#     }
 
-    def format(self, record: logging.LogRecord) -> str:
-        log_fmt = self.FORMATS.get(record.levelno)
-        formatter = logging.Formatter(log_fmt)
-        return formatter.format(record)
+#     def format(self, record: logging.LogRecord) -> str:
+#         log_fmt = self.FORMATS.get(record.levelno)
+#         formatter = logging.Formatter(log_fmt)
+#         return formatter.format(record)
 
 
 def scan(target_dir: str, suffix: list[str]) -> dict[str, list[str]]:

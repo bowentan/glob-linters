@@ -65,7 +65,10 @@ def set_logger(config: settings.Configuration) -> logging.Logger:
     else:
         logger.setLevel(logging.INFO)
     stream = logging.StreamHandler()
-    stream.setFormatter(io.CustomFormatter())
+    # stream.setFormatter(io.CustomFormatter())
+    stream.setFormatter(
+        logging.Formatter("%(asctime)s - [%(levelname)s] : %(message)s")
+    )
     logger.addHandler(stream)
     return logger
 

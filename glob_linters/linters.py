@@ -22,16 +22,17 @@ class Linter:
         cmd = [self.executable] + self.lint_options + [filename]
         logger.debug("Linting command: %s", " ".join(cmd))
         self.cmd_result = subprocess.run(cmd, capture_output=True)
-        self.stdout = self.cmd_result.stdout.decode().split("\n")
-        self.stderr = self.cmd_result.stderr.decode().split("\n")
+        self.stdout = self.cmd_result.stdout.decode().strip().split("\n")
+        self.stderr = self.cmd_result.stderr.decode().strip().split("\n")
 
         logger.debug("Linter output:")
         for out in self.stdout:
             logger.debug("\t%s", out)
 
-        logger.error("Errors found:")
-        for err in self.stderr:
-            logger.error("\t%s", err)
+        if len(self.stderr) > 0:
+            logger.error("Errors found:")
+            for err in self.stderr:
+                logger.error("\t%s", err)
 
         return len(self.stderr) | 0
 
