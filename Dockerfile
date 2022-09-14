@@ -32,9 +32,6 @@ RUN apk add --no-cache \
     zlib=1.2.12-r3 \
     zlib-dev=1.2.12-r3
 
-WORKDIR /glob-linters/install
-
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir glob-linters==0.1.1
 
 ENTRYPOINT [ "glob_linters" ]
