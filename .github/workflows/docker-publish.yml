@@ -17,9 +17,6 @@ on:
   release:
     types: [published]
 
-permissions:
-  contents: read
-
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
@@ -28,6 +25,8 @@ env:
 
 jobs:
   python-package-deploy:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
 
     steps:
@@ -48,7 +47,7 @@ jobs:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
 
-  docker-deplot:
+  docker-deploy:
     needs: python-package-deploy
     runs-on: ubuntu-latest
     permissions:
