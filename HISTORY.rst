@@ -32,3 +32,8 @@ History
 
 * Minor fixes
 
+0.1.0-alpha.7 (2022-09-14)
+--------------------------
+
+* Clean the main dev branch
+
