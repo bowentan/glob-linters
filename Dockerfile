@@ -36,9 +36,5 @@ WORKDIR /glob-linters/install
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-# hadolint ignore=DL3059
-# RUN pip install --no-cache-dir clang-format==14.0.6 cpplint==
-# # hadolint ignore=DL3059
-# RUN pip install --no-cache-dir glob-linters==0.1.0
 
 ENTRYPOINT [ "glob_linters" ]
