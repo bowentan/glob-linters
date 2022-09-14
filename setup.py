@@ -10,7 +10,7 @@ with open("README.rst", encoding="utf-8") as readme_file:
 with open("HISTORY.rst", encoding="utf-8") as history_file:
     history = history_file.read()
 
-requirements = ["numpy>=1.21"]
+requirements = [""]  # TODO: add requirements
 
 test_requirements = [
     "pytest>=3",
@@ -21,7 +21,7 @@ setup(
     author_email="bowentan78@gmail.com",
     python_requires=">=3.6",
     classifiers=[
-        "Development Status :: 2 - Pre-Alpha",
+        "Development Status :: 2 - Pre-Alpha",  # TODO: modify this
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
