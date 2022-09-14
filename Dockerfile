@@ -32,6 +32,6 @@ LABEL org.opencontainers.image.source https://github.com/bowentan/glob-linters
 #     zlib=1.2.12-r3 \
 #     zlib-dev=1.2.12-r3
 
-RUN pip install --no-cache-dir glob-linters==0.1.0-alpha.3
+RUN pip install --no-cache-dir glob-linters==0.1.0-alpha.4
 
 ENTRYPOINT [ "glob_linters" ]
