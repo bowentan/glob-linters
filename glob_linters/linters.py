@@ -29,10 +29,12 @@ class Linter:
         for out in self.stdout:
             logger.debug("\t%s", out)
 
-        if len(self.stderr) > 0:
+        if len(self.stderr) > 1:
             logger.error("Errors found:")
             for err in self.stderr:
                 logger.error("\t%s", err)
+        else:
+            logger.info("[%s] on %s: check passed", self.executable, filename)
 
         return len(self.stderr) | 0
 
