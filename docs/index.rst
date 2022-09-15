@@ -8,6 +8,7 @@ Welcome to glob-linters's documentation!
    readme
    installation
    usage
+   modules
    contributing
    authors
    history

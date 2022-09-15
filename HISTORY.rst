@@ -2,22 +2,12 @@
 History
 =======
 
-0.1.0-alpha.1 (2022-09-12)
+0.1.0-alpha.7 (2022-09-14)
 --------------------------
 
-* First draft pre-release version
+* Clean the main dev branch
 
-0.1.0-alpha.2 (2022-09-14)
---------------------------
-
-* Minor fixes
-
-0.1.0-alpha.3 (2022-09-14)
---------------------------
-
-* Minor fixes
-
-0.1.0-alpha.4 (2022-09-14)
+0.1.0-alpha.6 (2022-09-14)
 --------------------------
 
 * Minor fixes
@@ -27,13 +17,23 @@ History
 
 * Minor fixes
 
-0.1.0-alpha.6 (2022-09-14)
+0.1.0-alpha.4 (2022-09-14)
 --------------------------
 
 * Minor fixes
 
-0.1.0-alpha.7 (2022-09-14)
+0.1.0-alpha.3 (2022-09-14)
 --------------------------
 
-* Clean the main dev branch
+* Minor fixes
+
+0.1.0-alpha.2 (2022-09-14)
+--------------------------
+
+* Minor fixes
+
+0.1.0-alpha.1 (2022-09-12)
+--------------------------
+
+* First draft pre-release version
 
