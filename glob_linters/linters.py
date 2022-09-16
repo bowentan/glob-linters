@@ -39,11 +39,29 @@ class Linter:
         return len(self.stderr) | 0
 
 
-class ClangFormatLinter(Linter):
+# Linters for c/c++
+class ClangFormat(Linter):
     def __init__(self, executable: str) -> None:
         super().__init__(executable)
         self.lint_options = ["--dry-run"]
 
 
-class CppLinter(Linter):
+class Cpplint(Linter):
+    pass
+
+
+# Linters for Python
+class Pylint(Linter):
+    pass
+
+
+class Flake8(Linter):
+    pass
+
+
+class Black(Linter):
+    pass
+
+
+class Isort(Linter):
     pass
