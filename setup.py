@@ -17,6 +17,7 @@ requirements = [
     "flake8>=5.0.4",
     "black>=22.8.0",
     "isort>=5.10.1",
+    "mypy>=0.971",
 ]  # TODO: add requirements
 
 test_requirements = [

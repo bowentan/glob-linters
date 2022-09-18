@@ -15,5 +15,10 @@
         "editor.defaultFormatter": "ms-azuretools.vscode-docker"
     },
     "autoDocstring.docstringFormat": "numpy",
-    "mypy.configFile": "LINT_CONFIG/.mypy.ini",
+    "mypy.configFile": "LINTER_CONFIGS/.mypy.ini",
+    "python.linting.mypyArgs": [
+        "--follow-imports=silent",
+        "--show-column-numbers",
+        "--no-pretty"
+    ],
 }
