@@ -10,7 +10,15 @@ with open("README.rst", encoding="utf-8") as readme_file:
 with open("HISTORY.rst", encoding="utf-8") as history_file:
     history = history_file.read()
 
-requirements = ["clang-format>=14.0.6", "cpplint>=1.6.1"]  # TODO: add requirements
+requirements = [
+    "clang-format>=14.0.6",
+    "cpplint>=1.6.1",
+    "pylint>=2.15.2",
+    "flake8>=5.0.4",
+    "black>=22.8.0",
+    "isort>=5.10.1",
+    "mypy>=0.971",
+]  # TODO: add requirements
 
 test_requirements = [
     "pytest>=3",
