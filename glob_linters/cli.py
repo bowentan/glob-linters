@@ -34,43 +34,33 @@ def _parse_args(args: list[str]) -> argparse.Namespace:
     parser.add_argument(
         "-c", "--configs", dest="configs", default=None, nargs="+", help=""
     )
+    parser.add_argument(
+        "-s",
+        "--config-file",
+        dest="config_file",
+        default=settings.DEFAULT_CONFIG_FILE_PATH,
+        help="",
+    )
     return parser.parse_args(args)
 
 
 def _parse_config() -> None:
-    if os.path.exists(settings.Configs.DEFAULT_CONFIG_FILE_PATH):
+    if os.path.exists(settings.DEFAULT_CONFIG_FILE_PATH):
         settings.Configs.has_read_config_file = True
-        settings.parse_config_file(settings.Configs.DEFAULT_CONFIG_FILE_PATH)
+        settings.parse_config_file(settings.DEFAULT_CONFIG_FILE_PATH)
     elif len(sys.argv) > 1:
         args = _parse_args(sys.argv[1:])
         settings.parse_args(args)
 
 
-def clang_lint(targets: list[str]) -> None:
-    logger.info('Linting ".cpp"...')
-    for filename in targets:
-        settings.Configs.return_code |= settings.Configs.cpplint.lint(filename)
-    for filename in targets:
-        settings.Configs.return_code |= settings.Configs.clang_format.lint(filename)
-
-
-def python_lint(targets: list[str]) -> None:
-    logger.info('Linting ".py"')
-    for filename in targets:
-        logger.info("-" * 120)
-        settings.Configs.return_code |= settings.Configs.pylint.lint(filename)
-    for filename in targets:
-        logger.info("-" * 120)
-        settings.Configs.return_code |= settings.Configs.flake8.lint(filename)
-    for filename in targets:
-        logger.info("-" * 120)
-        settings.Configs.return_code |= settings.Configs.black.lint(filename)
-    for filename in targets:
-        logger.info("-" * 120)
-        settings.Configs.return_code |= settings.Configs.isort.lint(filename)
-    for filename in targets:
-        logger.info("-" * 120)
-        settings.Configs.return_code |= settings.Configs.mypy.lint(filename)
+def lint(targets: dict[str, list[str]]) -> None:
+    for ext, filenames in targets.items():
+        for linter_name in settings.Configs.linters_enabled[ext]:
+            for filename in filenames:
+                logger.info("-" * 120)
+                settings.Configs.return_code |= getattr(
+                    settings.Configs, linter_name
+                ).lint(filename)
 
 
 def _set_logger() -> None:
@@ -92,13 +82,16 @@ def main() -> int:
     _set_logger()
 
     logger.info("=" * 120)
+    settings.load_linter_configs()
+    logger.info("-" * 120)
+    settings.install_mypy_package_requirements()
+
+    logger.info("=" * 120)
     if settings.Configs.has_read_config_file:
         logger.info("Configuration file found, used that")
     else:
         logger.info("Configuration file not found, used defaults or command arguments")
     io.print_configs()
-
-    settings.install_mypy_package_requirements()
 
     # Scan files
     logger.info("Starting directory scan: %s", settings.Configs.target_dir)
@@ -114,8 +107,7 @@ def main() -> int:
     # Linting
     logger.info("=" * 120)
     logger.info("Lint starting...")
-    clang_lint(target_files[".cpp"])
-    python_lint(target_files[".py"])
+    lint(target_files)
 
     return settings.Configs.return_code
 

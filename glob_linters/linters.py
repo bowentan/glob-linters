@@ -16,6 +16,7 @@ class Linter:
         self.cmd_result: subprocess.CompletedProcess
         self.stdout: list[str]
         self.stderr: list[str]
+        self.use_config_file: bool = False
 
     def lint(self, filename: str) -> int:
         logger.info("Linting with [%s] on file %s", self.executable, filename)
