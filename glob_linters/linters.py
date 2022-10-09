@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class Linter:
-    """Linter data class to hold common variables"""
+    """Linter parent class"""
 
     def __init__(self, executable: str) -> None:
         self.executable = executable
@@ -19,6 +19,18 @@ class Linter:
         self.use_config_file: bool = False
 
     def lint(self, filename: str) -> int:
+        """General linting method
+
+        Parameters
+        ----------
+        filename : str
+            File path to be linted
+
+        Returns
+        -------
+        int
+            Return code of the linter program
+        """
         logger.info("Linting with [%s] on file %s", self.executable, filename)
         cmd = [self.executable] + self.options + [filename]
         logger.debug("Linting command: %s", " ".join(cmd))
@@ -30,6 +42,7 @@ class Linter:
         return self.cmd_result.returncode
 
     def process_output(self) -> None:
+        """Process output, since some linters print errors to stdout"""
         logger.debug("Linter stdout:")
         for out in self.stdout:
             logger.debug("\t%s", out)
@@ -44,17 +57,21 @@ class Linter:
 
 # Linters for c/c++
 class ClangFormat(Linter):
+    """`clang-format` linter"""
+
     def __init__(self, executable: str) -> None:
         super().__init__(executable)
         self.options = ["--dry-run", "--Werror"]
 
 
 class Cpplint(Linter):
-    pass
+    """`cpplint` linter"""
 
 
 # Linters for Python
 class Pylint(Linter):
+    """`pylint` linter"""
+
     def __init__(self, executable: str) -> None:
         super().__init__(executable)
         self.options = ["--output-format=parseable"]
@@ -69,6 +86,8 @@ class Pylint(Linter):
 
 
 class Flake8(Linter):
+    """`flake8` linter"""
+
     def process_output(self) -> None:
         if self.cmd_result.returncode != 0:
             logger.error("Found errors:")
@@ -79,6 +98,8 @@ class Flake8(Linter):
 
 
 class Black(Linter):
+    """`black` linter"""
+
     def __init__(self, executable: str) -> None:
         super().__init__(executable)
         self.options = ["--check", "--diff"]
@@ -93,6 +114,8 @@ class Black(Linter):
 
 
 class Isort(Linter):
+    """`isort` linter"""
+
     def __init__(self, executable: str) -> None:
         super().__init__(executable)
         self.options = ["--check-only", "--diff"]
@@ -107,6 +130,8 @@ class Isort(Linter):
 
 
 class Mypy(Linter):
+    """`mypy` linter"""
+
     def __init__(self, executable: str) -> None:
         super().__init__(executable)
         self.options = ["--pretty", "--show-error-context", "--show-error-codes"]

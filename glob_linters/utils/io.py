@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 def print_configs() -> None:
+    """Show configuration"""
     attr_names_sorted_logically = [
         "has_read_config_file",
         "debug",
