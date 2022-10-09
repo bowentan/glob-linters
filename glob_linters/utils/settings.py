@@ -30,6 +30,8 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class Configs:
+    """Class to store configs/settings"""
+
     # Exit code record
     return_code: ClassVar[int] = 0
 
@@ -38,7 +40,7 @@ class Configs:
 
     # Lint targets settings
     target_dir: ClassVar[str] = "."
-    target_suffix: ClassVar[list[str]] = [".c", ".cpp", ".py"]
+    target_suffix: ClassVar[list[str]] = SUPPORTED_FILE_SUFFIX
 
     # Running mode
     debug: ClassVar[bool] = False
@@ -196,6 +198,18 @@ class Configs:
 
 
 def parse_config_file(config_file: str) -> None:
+    """Parse configuration from configparser-like file
+
+    Parameters
+    ----------
+    config_file : str
+        Configuration file path
+
+    Raises
+    ------
+    ValueError
+        Invalid section/option found in config file
+    """
     config_parser = configparser.ConfigParser()
     config_parser.read(config_file)
     for section in config_parser:
@@ -216,6 +230,18 @@ def parse_config_file(config_file: str) -> None:
 
 
 def parse_args(args: argparse.Namespace) -> None:
+    """Parse command line arguments
+
+    Parameters
+    ----------
+    args : argparse.Namespace
+        Arguments returned by `argparse.parse_args`
+
+    Raises
+    ------
+    ValueError
+        Invalid linter name found
+    """
     if os.path.exists(args.config_file):
         parse_config_file(args.config_file)
     else:
@@ -224,15 +250,19 @@ def parse_args(args: argparse.Namespace) -> None:
         Configs.target_suffix = re.split(r"\s", args.target_suffix)
         if args.configs is not None:
             for key, value in map(lambda x: re.split("=", x), args.configs):
-                if key not in Configs.set_configs["executable"]:
-                    raise ValueError(f"No such linter supported: {key}")
-                if "options" in key:
-                    Configs.set_configs["executable"][key](value)
+                if key in Configs.set_configs["executable"]:
+                    if "options" in key:
+                        Configs.set_configs["executable"][key](value)
+                    else:
+                        Configs.set_configs["executable"][key](value)
+                elif key in Configs.set_configs["env"]:
+                    Configs.set_configs["env"][key](value)
                 else:
-                    Configs.set_configs["executable"][key](value)
+                    raise ValueError(f"No such linter supported: {key}")
 
 
 def install_mypy_package_requirements() -> None:
+    """Install additional packages for mypy linting"""
     if not os.path.exists(MYPY_PACKAGE_REQUIREMENTS_FILE_PATH):
         logger.info("Not found mypy_requirements.txt, skip package installation")
         return
@@ -253,6 +283,7 @@ def install_mypy_package_requirements() -> None:
 
 
 def load_linter_configs() -> None:
+    """Load config file for each enabled linter"""
     for ext in Configs.target_suffix:
         for linter_name in Configs.linters_enabled[ext]:
             logger.debug("Setting linter config for [%s]", linter_name)

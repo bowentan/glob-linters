@@ -17,7 +17,7 @@ def _parse_args(args: list[str]) -> argparse.Namespace:
         dest="target_dir",
         default=settings.Configs.target_dir,
         type=str,
-        help="",
+        help="Target directory containing files to be linted",
     )
     parser.add_argument(
         "-s",
@@ -26,34 +26,52 @@ def _parse_args(args: list[str]) -> argparse.Namespace:
         default=" ".join(settings.Configs.target_suffix),
         nargs="*",
         type=str,
-        help="",
+        help="Target file extensions, like '.cpp', '.py'",
     )
     parser.add_argument(
-        "-g", "--enable-debug", dest="debug", action="store_true", help=""
+        "-g",
+        "--enable-debug",
+        dest="debug",
+        action="store_true",
+        help="Enable debug mode, output debugging information",
     )
     parser.add_argument(
-        "-c", "--configs", dest="configs", default=None, nargs="+", help=""
+        "-c",
+        "--configs",
+        dest="configs",
+        default=None,
+        nargs="+",
+        help="Set configuration, use `key=value` format and"
+        "separate multiple pairs by comma or space",
     )
     parser.add_argument(
-        "-s",
+        "-C",
         "--config-file",
         dest="config_file",
         default=settings.DEFAULT_CONFIG_FILE_PATH,
-        help="",
+        help="glob_linters configuration file (glob-linter.ini) path",
     )
     return parser.parse_args(args)
 
 
 def _parse_config() -> None:
+    args = _parse_args(sys.argv[1:])
+
     if os.path.exists(settings.DEFAULT_CONFIG_FILE_PATH):
         settings.Configs.has_read_config_file = True
         settings.parse_config_file(settings.DEFAULT_CONFIG_FILE_PATH)
     elif len(sys.argv) > 1:
-        args = _parse_args(sys.argv[1:])
         settings.parse_args(args)
 
 
 def lint(targets: dict[str, list[str]]) -> None:
+    """Linting process
+
+    Parameters
+    ----------
+    targets : dict[str, list[str]]
+        Files as a list to be linted for each file suffix
+    """
     for ext, filenames in targets.items():
         for linter_name in settings.Configs.linters_enabled[ext]:
             for filename in filenames:

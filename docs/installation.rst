@@ -1,5 +1,3 @@
-.. highlight:: shell
-
 ============
 Installation
 ============
@@ -12,7 +10,7 @@ To install glob-linters, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install glob_linters
+    $ pip install glob-linters
 
 This is the preferred method to install glob-linters, as it will always install the most recent stable release.
 
@@ -32,13 +30,13 @@ You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/bowentan/glob_linters
+    $ git clone git://github.com/bowentan/glob-linters
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl -OJL https://github.com/bowentan/glob_linters/tarball/master
+    $ curl -OJL https://github.com/bowentan/glob-linters/tarball/main
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +45,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/bowentan/glob_linters
-.. _tarball: https://github.com/bowentan/glob_linters/tarball/master
+.. _Github repo: https://github.com/bowentan/glob-linters
+.. _tarball: https://github.com/bowentan/glob-linters/tarball/main

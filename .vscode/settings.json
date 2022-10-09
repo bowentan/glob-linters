@@ -1,5 +1,5 @@
 {
-    "esbonio.sphinx.confDir": "",
+    "esbonio.sphinx.confDir": "${workspaceFolder}/docs",
     "editor.formatOnType": true,
     "python.linting.mypyEnabled": true,
     "mypy.runUsingActiveInterpreter": true,
