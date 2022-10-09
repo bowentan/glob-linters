@@ -40,7 +40,7 @@ jobs:
       - name: Build package
         run: python -m build
       - name: Publish package
-        if: github.event_name != 'pull_request'
+        if: ${{ github.event_name != 'pull_request' }}
         uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
         with:
           user: __token__
@@ -59,7 +59,7 @@ jobs:
     steps:
       - name: Wait PyPi update
         run: |
-          sleep 90s
+          sleep 120s
 
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -98,6 +98,7 @@ jobs:
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
+        if: ${{ github.event_name != 'pull_request' }}
         id: build-and-push
         uses: docker/build-push-action@ac9327eae2b366085ac7f6a2d02df8aa8ead720a
         with:
