@@ -4,7 +4,34 @@ import logging
 import os
 from pathlib import Path
 
+from glob_linters.utils import settings
+
 logger = logging.getLogger(__name__)
+
+
+def print_configs() -> None:
+    """Show configuration"""
+    attr_names_sorted_logically = [
+        "has_read_config_file",
+        "debug",
+        "linters_enabled",
+        "target_dir",
+        "target_suffix",
+    ]
+    logger.debug("Configuration set:")
+    for attr in attr_names_sorted_logically:
+        if attr == "linters_enabled":
+            for ext in settings.Configs.target_suffix:
+                for linter_name in settings.Configs.linters_enabled[ext]:
+                    logger.debug(
+                        "\t%s - %s executable: %s, use configuration file: %s",
+                        ext,
+                        linter_name,
+                        getattr(settings.Configs, linter_name).executable,
+                        getattr(settings.Configs, linter_name).use_config_file,
+                    )
+        else:
+            logger.debug("\t%s: %s", attr, getattr(settings.Configs, attr))
 
 
 def scan(target_dir: str, suffix: list[str]) -> dict[str, list[str]]:

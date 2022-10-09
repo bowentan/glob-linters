@@ -10,7 +10,15 @@ with open("README.rst", encoding="utf-8") as readme_file:
 with open("HISTORY.rst", encoding="utf-8") as history_file:
     history = history_file.read()
 
-requirements = ["clang-format>=14.0.6", "cpplint>=1.6.1"]  # TODO: add requirements
+requirements = [
+    "clang-format>=14.0.6",
+    "cpplint>=1.6.1",
+    "pylint>=2.15.2",
+    "flake8>=5.0.4",
+    "black>=22.8.0",
+    "isort>=5.10.1",
+    "mypy>=0.971",
+]
 
 test_requirements = [
     "pytest>=3",
@@ -21,7 +29,7 @@ setup(
     author_email="bowentan78@gmail.com",
     python_requires=">=3.6",
     classifiers=[
-        "Development Status :: 2 - Pre-Alpha",  # TODO: modify this
+        "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
@@ -30,7 +38,8 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
     ],
-    description="GitHub action for multi-language linters",
+    description="Integrated tool for multi-language linters for command line tool"
+    "and GitHub action",
     entry_points={
         "console_scripts": [
             "glob_linters=glob_linters.cli:main",
@@ -46,6 +55,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/bowentan/glob-linters",
-    version="0.1.0-alpha.7",  # TODO: modify this
+    version="0.1.0",
     zip_safe=False,
 )

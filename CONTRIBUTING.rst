@@ -4,7 +4,7 @@
 Contributing
 ============
 
-Contributions are welcome, and they are greatly appreciated! Every little bit
+Contributions are welcome, and are greatly appreciated! Every little bit
 helps, and credit will always be given.
 
 You can contribute in many ways:
@@ -15,13 +15,10 @@ Types of Contributions
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/bowentan/glob_linters/issues.
+Report bugs at https://github.com/bowentan/glob-linters/issues.
 
-If you are reporting a bug, please include:
-
-* Your operating system name and version.
-* Any details about your local setup that might be helpful in troubleshooting.
-* Detailed steps to reproduce the bug.
+If you are reporting a bug, please follow the template to give as many details as
+you can.
 
 Fix Bugs
 ~~~~~~~~
@@ -45,30 +42,27 @@ articles, and such.
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
-The best way to send feedback is to file an issue at https://github.com/bowentan/glob_linters/issues.
-
-If you are proposing a feature:
-
-* Explain in detail how it would work.
-* Keep the scope as narrow as possible, to make it easier to implement.
-* Remember that this is a volunteer-driven project, and that contributions
-  are welcome :)
+The best way to send feedback is to file an issue at https://github.com/bowentan/glob-linters/issues.
 
 Get Started!
 ------------
 
-Ready to contribute? Here's how to set up `glob_linters` for local development.
+Ready to contribute? Here's how to set up `glob-linters` for local development.
 
-1. Fork the `glob_linters` repo on GitHub.
+1. Fork the `glob-linters` repo on GitHub.
 2. Clone your fork locally::
 
-    $ git clone git@github.com:your_name_here/glob_linters.git
+    $ git clone git@github.com:bowentan/glob-linters.git
 
 3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
 
-    $ mkvirtualenv glob_linters
-    $ cd glob_linters/
+    $ mkvirtualenv glob-linters
+    $ cd glob-linters/
     $ python setup.py develop
+
+   Additionally, you can install the required Python packages for development::
+
+    $ pip install -r requirements_dev.txt
 
 4. Create a branch for local development::
 
@@ -76,14 +70,16 @@ Ready to contribute? Here's how to set up `glob_linters` for local development.
 
    Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8 and the
-   tests, including testing other Python versions with tox::
+5. When you're done making changes, check that your changes pass the following checks:
 
-    $ flake8 glob_linters tests
-    $ python setup.py test or pytest
-    $ tox
+   * :program:`pylint`
+   * :program:`flake8`
+   * :program:`black`
+   * :program:`isort`
+   * :program:`mypy`
 
-   To get flake8 and tox, just pip install them into your virtualenv.
+   All these linters have corresponding extensions in VSCode. You should also test
+   the changes to guarantee that they work before you commit changes.
 
 6. Commit your changes and push your branch to GitHub::
 
@@ -98,31 +94,7 @@ Pull Request Guidelines
 
 Before you submit a pull request, check that it meets these guidelines:
 
-1. The pull request should include tests.
+1. The pull request should pass local tests.
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 3.5, 3.6, 3.7 and 3.8, and for PyPy. Check
-   https://travis-ci.com/bowentan/glob_linters/pull_requests
-   and make sure that the tests pass for all supported Python versions.
-
-Tips
-----
-
-To run a subset of tests::
-
-$ pytest tests.test_glob_linters
-
-
-Deploying
----------
-
-A reminder for the maintainers on how to deploy.
-Make sure all your changes are committed (including an entry in HISTORY.rst).
-Then run::
-
-$ bump2version patch # possible: major / minor / patch
-$ git push
-$ git push --tags
-
-Travis will then deploy to PyPI if tests pass.

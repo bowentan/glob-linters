@@ -4,115 +4,130 @@ import logging
 import os
 import sys
 
-from glob_linters import linters
 from glob_linters.utils import io, settings
 
+logger = logging.getLogger()
 
-def parse_args(args: list[str], configs: settings.Configs) -> argparse.Namespace:
+
+def _parse_args(args: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-d",
         "--target-dir",
         dest="target_dir",
-        default=configs.target_dir,
+        default=settings.Configs.target_dir,
         type=str,
-        help="",
+        help="Target directory containing files to be linted",
     )
     parser.add_argument(
         "-s",
         "--file-suffix",
         dest="target_suffix",
-        default=configs.target_suffix,
+        default=" ".join(settings.Configs.target_suffix),
         nargs="*",
         type=str,
-        help="",
+        help="Target file extensions, like '.cpp', '.py'",
     )
     parser.add_argument(
-        "-g", "--enable-debug", dest="debug", action="store_true", help=""
+        "-g",
+        "--enable-debug",
+        dest="debug",
+        action="store_true",
+        help="Enable debug mode, output debugging information",
     )
     parser.add_argument(
-        "--cpplint",
-        dest="cpplint_exec",
-        default=configs.cpplint_exec,
-        type=str,
-        help="",
+        "-c",
+        "--configs",
+        dest="configs",
+        default=None,
+        nargs="+",
+        help="Set configuration, use `key=value` format and"
+        "separate multiple pairs by comma or space",
     )
     parser.add_argument(
-        "--clang-format",
-        dest="clang_format_exec",
-        default=configs.clang_format_exec,
-        type=str,
-        help="",
+        "-C",
+        "--config-file",
+        dest="config_file",
+        default=settings.DEFAULT_CONFIG_FILE_PATH,
+        help="glob_linters configuration file (glob-linter.ini) path",
     )
     return parser.parse_args(args)
 
 
-def set_config() -> settings.Configuration:
-    config = settings.Configuration()
-    if os.path.exists(config.configs.DEFAULT_CONFIG_FILE):
-        config.configs.has_read_config_file = True
-        config.parse_config_file(config.configs.DEFAULT_CONFIG_FILE)
+def _parse_config() -> None:
+    args = _parse_args(sys.argv[1:])
+
+    if os.path.exists(settings.DEFAULT_CONFIG_FILE_PATH):
+        settings.Configs.has_read_config_file = True
+        settings.parse_config_file(settings.DEFAULT_CONFIG_FILE_PATH)
     elif len(sys.argv) > 1:
-        args = parse_args(sys.argv[1:], config.configs)
-        config.parse_args(args)
-    return config
+        settings.parse_args(args)
 
 
-def set_logger(config: settings.Configuration) -> logging.Logger:
-    logger = logging.getLogger()
-    if config.configs.debug:
+def lint(targets: dict[str, list[str]]) -> None:
+    """Linting process
+
+    Parameters
+    ----------
+    targets : dict[str, list[str]]
+        Files as a list to be linted for each file suffix
+    """
+    for ext, filenames in targets.items():
+        for linter_name in settings.Configs.linters_enabled[ext]:
+            for filename in filenames:
+                logger.info("-" * 120)
+                settings.Configs.return_code |= getattr(
+                    settings.Configs, linter_name
+                ).lint(filename)
+
+
+def _set_logger() -> None:
+    # logger = logging.getLogger()
+    if settings.Configs.debug:
         logger.setLevel(logging.DEBUG)
     else:
         logger.setLevel(logging.INFO)
     stream = logging.StreamHandler()
-    # stream.setFormatter(io.CustomFormatter())
     stream.setFormatter(
         logging.Formatter("%(asctime)s - [%(levelname)s] : %(message)s")
     )
     logger.addHandler(stream)
-    return logger
 
 
 def main() -> int:
     """Console script for glob_linters."""
-    config = set_config()
-    logger = set_logger(config)
+    _parse_config()
+    _set_logger()
 
-    if config.configs.has_read_config_file:
+    logger.info("=" * 120)
+    settings.load_linter_configs()
+    logger.info("-" * 120)
+    settings.install_mypy_package_requirements()
+
+    logger.info("=" * 120)
+    if settings.Configs.has_read_config_file:
         logger.info("Configuration file found, used that")
     else:
         logger.info("Configuration file not found, used defaults or command arguments")
-    logger.debug("Configuration set:")
-    for key, value in vars(config.configs).items():
-        if key == "DEFAULT_CONFIG_FILE":
-            continue
-        logger.debug("\t%s: %s", key, value)
+    io.print_configs()
 
     # Scan files
-    logger.info("Starting directory scan: %s", config.configs.target_dir)
+    logger.info("Starting directory scan: %s", settings.Configs.target_dir)
     logger.info("Target suffix:")
-    for suffix in config.configs.target_suffix:
+    for suffix in settings.Configs.target_suffix:
         logger.info("\t%s", suffix)
-    target_files = io.scan(config.configs.target_dir, config.configs.target_suffix)
+    target_files = io.scan(settings.Configs.target_dir, settings.Configs.target_suffix)
     logger.info("Target file list:")
     for lang, files in target_files.items():
         for file in files:
             logger.info("\t%s - %s", lang, file)
 
     # Linting
+    logger.info("=" * 120)
     logger.info("Lint starting...")
+    lint(target_files)
 
-    logger.info("Linting .cpp...")
-    logger.info("Initializing cpplint...")
-    cpp_linter = linters.CppLinter("cpplint")
-    for filename in target_files[".cpp"]:
-        config.configs.return_code |= cpp_linter.lint(filename)
-    logger.info("Initializing clang-format...")
-    clang_format_linter = linters.ClangFormatLinter("clang-format")
-    for filename in target_files[".cpp"]:
-        config.configs.return_code |= clang_format_linter.lint(filename)
-
-    return config.configs.return_code
+    return settings.Configs.return_code
 
 
 if __name__ == "__main__":
