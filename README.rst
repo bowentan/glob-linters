@@ -51,7 +51,7 @@ action. Choose the appropriate one as a quick start.
 Command line
 ~~~~~~~~~~~~
 
-To use as a command line tool, install the latest package by :command:`pip` using the
+To use as a command line tool, install the latest package by ``pip`` using the
 following command:
 
 .. code-block:: console
@@ -67,13 +67,13 @@ following to see the command line options.
 
 Then run :code:`glob_linters` to lint all supported languages in the *current directory*,
 which will scan all corresponding files recursively and then perform linting. If you
-want to lint particular files, please visit :doc:`/usage` for more advanced usages.
+want to lint particular files, please visit the documentation for more advanced usages.
 
 GitHub action
 ~~~~~~~~~~~~~
 
 To use glob-linters in GitHub action, create a workflow file such as
-:file:`.github/workflows/glob-linters.yml` in your own repository with the example
+``.github/workflows/glob-linters.yml`` in your own repository with the example
 contents:
 
 .. code-block:: yaml
@@ -101,7 +101,7 @@ contents:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 You can control the workflow by creating a configuration file named as
-:file:`.github/glob-linters.ini` and a sample configuration is given below:
+``.github/glob-linters.ini`` and a sample configuration is given below:
 
 .. code-block:: ini
 
@@ -121,16 +121,18 @@ You can control the workflow by creating a configuration file named as
         debug = True
 
 This configuration will enable ``debug`` mode with additional information when running
-and set the directory that will be searched for linting :file:`.py` files to be the
+and set the directory that will be searched for linting ``.py`` files to be the
 root of your repository.
 
-For more details about usage, please refer to :doc:`/usage`.
+For more details about usage, please refer to the documentation.
 
 Contributing
 ------------
 
 If you are interested in this project and would like to make some contributions, please
-refer to :doc:`/contributing` for the contributing guide.
+refer to the contributing_ for the contributing guide.
+
+.. _contributing: https://github.com/bowentan/glob-linters/blob/main/CONTRIBUTING.rst
 
 Credits
 -------
