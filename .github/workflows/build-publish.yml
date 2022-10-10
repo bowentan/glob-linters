@@ -6,8 +6,9 @@ name: Build and publish
 # documentation.
 
 on:
-  push:
-    branches: ["releases/**"]
+  release:
+    types:
+      - "published"
 
 env:
   # Use docker.io for Docker Hub if empty
