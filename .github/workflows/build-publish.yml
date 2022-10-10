@@ -17,7 +17,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  python-package-deploy:
+  python-package-publish:
     permissions:
       contents: read
     runs-on: ubuntu-latest
@@ -41,7 +41,7 @@ jobs:
           password: ${{ secrets.PYPI_API_TOKEN }}
 
   docker-deploy:
-    needs: python-package-deploy
+    needs: python-package-publish
     runs-on: ubuntu-latest
     permissions:
       contents: read
