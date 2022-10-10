@@ -95,7 +95,6 @@ jobs:
         with:
           context: .
           platforms: linux/amd64
-          push: github.event.pull_request.merged
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
