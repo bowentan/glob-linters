@@ -96,7 +96,7 @@ contents:
                   fetch-depth: 0
 
               - name: Linting
-                uses: bowentan/glob-linters@v0.1.1
+                uses: bowentan/glob-linters@v0.1.2
                 env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
