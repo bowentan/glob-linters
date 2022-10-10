@@ -13,7 +13,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  python-package-deploy:
+  test-python-package-publish:
     permissions:
       contents: read
     runs-on: ubuntu-latest
