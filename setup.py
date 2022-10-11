@@ -79,7 +79,7 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/bowentan/glob-linters",
-    version="0.1.0-rc.9+15",
+    version="0.1.0-rc.10",
     zip_safe=False,
     setup_requires=setup_requrements,
 )
