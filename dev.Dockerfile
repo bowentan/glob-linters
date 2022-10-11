@@ -4,5 +4,5 @@ WORKDIR /glob-linters
 COPY . .
 RUN pip install --no-cache-dir .
 
-CMD ["glob_linters"]
+CMD ["glob-linters"]
 # ENTRYPOINT ["glob_linters"]

@@ -7,8 +7,8 @@ from setuptools import find_packages, setup
 with open("README.rst", encoding="utf-8") as readme_file:
     readme = readme_file.read()
 
-with open("HISTORY.rst", encoding="utf-8") as history_file:
-    history = history_file.read()
+with open("CHANGELOG.rst", encoding="utf-8") as changelog_file:
+    changelog = changelog_file.read()
 
 requirements = [
     "clang-format>=14.0.6",
@@ -42,20 +42,20 @@ setup(
     "and GitHub action",
     entry_points={
         "console_scripts": [
-            "glob_linters=glob_linters.cli:main",
+            "glob-linters=glob_linters.cli:main",
         ],
     },
     install_requires=requirements,
     license="MIT license",
-    long_description=readme + "\n\n" + history,
+    long_description=readme + "\n\n" + changelog,
     long_description_content_type="text/x-rst",
     include_package_data=True,
-    keywords="glob_linters",
-    name="glob_linters",
+    keywords="glob-linters",
+    name="glob-linters",
     packages=find_packages(include=["glob_linters", "glob_linters.*"]),
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/bowentan/glob-linters",
-    version="0.1.0rc8",
+    version="0.1.0-rc.11",
     zip_safe=False,
 )
