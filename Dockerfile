@@ -5,4 +5,4 @@ LABEL org.opencontainers.image.source https://github.com/bowentan/glob-linters
 ENV GLOB_LINTERS_VERSION 0.1.0-rc.9+13
 RUN pip install --no-cache-dir glob-linters==${GLOB_LINTERS_VERSION}
 
-ENTRYPOINT [ "glob_linters" ]
+ENTRYPOINT [ "glob-linters" ]
