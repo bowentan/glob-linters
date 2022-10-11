@@ -26,11 +26,29 @@ test_requirements = [
     "pytest>=3",
 ]
 
+
+# pylint: disable=unused-argument
+def local_scheme(version: str) -> str:
+    """_summary_
+
+    Parameters
+    ----------
+    version : str
+        _description_
+
+    Returns
+    -------
+    str
+        _description_
+    """
+    return ""
+
+
 setup(
     author="Bowen Tan",
     author_email="bowentan78@gmail.com",
     use_scm_version={
-        "local_scheme": "node-and-timestamp",
+        "local_scheme": local_scheme,
     },
     python_requires=">=3.6",
     classifiers=[
