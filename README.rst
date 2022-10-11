@@ -7,7 +7,7 @@ glob-linters
         :target: https://pypi.python.org/pypi/glob_linters
 
 .. image:: https://readthedocs.org/projects/glob-linters/badge/?version=latest
-        :target: https://glob-linters.readthedocs.io/en/latest
+        :target: https://glob-linters.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
 .. image:: https://github.com/bowentan/glob-linters/actions/workflows/build-publish.yml/badge.svg
@@ -21,7 +21,7 @@ actions.
 
 
 * Free software: MIT license
-* Documentation: https://glob-linters.readthedocs.io.
+* Documentation: https://glob-linters.readthedocs.io/.
 
 
 Features
@@ -96,7 +96,7 @@ contents:
                   fetch-depth: 0
 
               - name: Linting
-                uses: bowentan/glob-linters@v0.1.0-rc.12
+                uses: bowentan/glob-linters@v0.1.0
                 env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
