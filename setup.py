@@ -10,6 +10,8 @@ with open("README.rst", encoding="utf-8") as readme_file:
 with open("CHANGELOG.rst", encoding="utf-8") as changelog_file:
     changelog = changelog_file.read()
 
+setup_requirements = ["setuptools_scm"]
+
 requirements = [
     "clang-format>=14.0.6",
     "cpplint>=1.6.1",
@@ -27,6 +29,8 @@ test_requirements = [
 setup(
     author="Bowen Tan",
     author_email="bowentan78@gmail.com",
+    setup_requires=setup_requirements,
+    use_scm_version={"local_scheme": "node-and-timestamp"},
     python_requires=">=3.6",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
