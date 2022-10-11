@@ -6,5 +6,5 @@ Changelog
 ------------------
 
 * First pre-release version.
-* Include linters for :file:`.cpp` and :file:`.py` files.
+* Include linters for ``.cpp`` and ``.py`` files.
 
