@@ -10,6 +10,8 @@ with open("README.rst", encoding="utf-8") as readme_file:
 with open("CHANGELOG.rst", encoding="utf-8") as changelog_file:
     changelog = changelog_file.read()
 
+setup_requirements = ["setuptools_scm"]
+
 requirements = [
     "clang-format>=14.0.6",
     "cpplint>=1.6.1",
@@ -24,9 +26,16 @@ test_requirements = [
     "pytest>=3",
 ]
 
+
+def local_scheme(version: str) -> str:
+    return ""
+
+
 setup(
     author="Bowen Tan",
     author_email="bowentan78@gmail.com",
+    setup_requires=setup_requirements,
+    use_scm_version={"local_scheme": local_scheme},
     python_requires=">=3.6",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
@@ -56,6 +65,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/bowentan/glob-linters",
-    version="0.1.0-rc.11",
+    version="0.1.0-rc.11+2",
     zip_safe=False,
 )
