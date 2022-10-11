@@ -26,11 +26,16 @@ test_requirements = [
     "pytest>=3",
 ]
 
+
+def local_scheme(version: str) -> str:
+    return ""
+
+
 setup(
     author="Bowen Tan",
     author_email="bowentan78@gmail.com",
     setup_requires=setup_requirements,
-    use_scm_version={"local_scheme": "node-and-timestamp"},
+    use_scm_version={"local_scheme": local_scheme},
     python_requires=">=3.6",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
