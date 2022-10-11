@@ -54,7 +54,7 @@ jobs:
       - name: Wait PyPi update
         run: |
           python -m pip install --upgrade pip
-          while true; do pip index versions --pre glob-linters | grep "0.1.0-rc.9" > /dev/null; [ $? -eq 0 ] && return 0 || (echo "Waiting..."; sleep 5); done
+          while true; do pip index versions --pre glob-linters | grep "0.1.0-rc.9+9" > /dev/null; [ $? -eq 0 ] && return 0 || (echo "Waiting..."; sleep 5); done
 
       - name: Checkout repository
         uses: actions/checkout@v3
