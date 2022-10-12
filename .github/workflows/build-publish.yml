@@ -53,7 +53,8 @@ jobs:
     steps:
       - name: Wait PyPi update
         run: |
-          sleep 300
+          python -m pip install --upgrade pip
+          while true; do pip download glob-linters==0.1.0-rc.13 2> /dev/null && break || sleep 5; done
 
       - name: Checkout repository
         uses: actions/checkout@v3
