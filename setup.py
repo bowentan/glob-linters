@@ -27,7 +27,19 @@ test_requirements = [
 ]
 
 
-def local_scheme(version: str) -> str:
+def _local_scheme(version: str) -> str:  # pylint: disable=unused-argument
+    """Adjust local version
+
+    Parameters
+    ----------
+    version : str
+        Version string
+
+    Returns
+    -------
+    str
+        Adjusted version
+    """
     return ""
 
 
@@ -35,7 +47,7 @@ setup(
     author="Bowen Tan",
     author_email="bowentan78@gmail.com",
     setup_requires=setup_requirements,
-    use_scm_version={"local_scheme": local_scheme},
+    use_scm_version={"local_scheme": _local_scheme},
     python_requires=">=3.6",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
@@ -65,6 +77,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/bowentan/glob-linters",
-    version="0.1.0-rc.11+2",
+    version="0.1.0-rc.12",
     zip_safe=False,
 )
