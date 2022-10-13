@@ -73,10 +73,17 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Parse version
+        id: parser_version
+        run: |
+          echo ${{ steps.meta.outputs.version }} | awk '{split($1, ver, "-"); split(substr(ver[1], 2, length(ver[1])), pub, "."); print "major="pub[1]"\nminor="pub[2]"\npatch="pub[3]}' >> $GITHUB_OUTPUT
+
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags.major }}
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v${{ steps.parser_version.outputs.major }}
+            ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
