@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.1.0-rc.20](https://github.com/bowentan/glob-linters/compare/v0.1.0-rc.16...v0.1.0-rc.20) (2022-10-13)
+
+
+### Miscellaneous Chores
+
+* release 0.1.0-a.1 ([8eefe96](https://github.com/bowentan/glob-linters/commit/8eefe96577bc4fac546389d39fe801c348124566))
+* release 0.1.0-rc.15 ([9a5ef05](https://github.com/bowentan/glob-linters/commit/9a5ef05f26c51332d49557fd03d07267e5b1902f))
+* release 0.1.0-rc.16+1 ([4b083aa](https://github.com/bowentan/glob-linters/commit/4b083aab8e872bbe5b27298e0c6eb801a0b9ac26))
+* release 0.1.0-rc.17 ([3fe45d3](https://github.com/bowentan/glob-linters/commit/3fe45d37b1a678df23d6efd756a739e812f7afac))
+* release 0.1.0-rc.17 ([412e61f](https://github.com/bowentan/glob-linters/commit/412e61f8457a9a303ce74d23d2dad5b2e8ad6003))
+* release 0.1.0-rc.18 ([9a4d586](https://github.com/bowentan/glob-linters/commit/9a4d586cf9282a90174c91c95489842651aa47e9))
+* release 0.1.0-rc.18 ([242d374](https://github.com/bowentan/glob-linters/commit/242d37404567157df84d22d60dc0b2e1ecb85df6))
+* release 0.1.0-rc.18 ([cd7d700](https://github.com/bowentan/glob-linters/commit/cd7d700958f833e010cdccdc211990073d184f2f))
+* release 0.1.0-rc.19 ([4077547](https://github.com/bowentan/glob-linters/commit/407754780f7756ce05cf051d92250e5ebde1adbd))
+* release 0.1.0-rc.20 ([e992f3c](https://github.com/bowentan/glob-linters/commit/e992f3c43d59c66fc85ba0b45b0bd9064adfc6b9))
+
 ## [0.1.0-rc.16](https://github.com/bowentan/glob-linters/compare/v0.1.0-rc.14...v0.1.0-rc.16) (2022-10-13)
 
 
