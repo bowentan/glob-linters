@@ -40,7 +40,7 @@ jobs:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
 
-  docker-deploy:
+  docker-publish:
     needs: python-package-publish
     runs-on: ubuntu-latest
     permissions:
@@ -54,7 +54,7 @@ jobs:
       - name: Wait PyPi update
         run: |
           python -m pip install --upgrade pip
-          while true; do pip download glob-linters==0.1.0-rc.25 2> /dev/null && break || sleep 5; done
+          while true; do pip download glob-linters==0.1.0-rc.26 2> /dev/null && break || sleep 5; done
 
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -78,5 +78,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags.major }}
           labels: ${{ steps.meta.outputs.labels }}
