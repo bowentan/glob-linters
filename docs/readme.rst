@@ -7,7 +7,7 @@ glob-linters
         :target: https://pypi.python.org/pypi/glob_linters
 
 .. image:: https://readthedocs.org/projects/glob-linters/badge/?version=latest
-        :target: https://glob-linters.readthedocs.io/en/latest/?version=latest
+        :target: https://glob-linters.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
 .. image:: https://github.com/bowentan/glob-linters/actions/workflows/build-publish.yml/badge.svg
