@@ -12,6 +12,7 @@ jobs:
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
+          token: ${{ secrets.GH_AC_PAT }}
           release-type: python
           signoff: Bowen Tan <bowentan78@gmail.com>
           prerelease: true
