@@ -16,6 +16,12 @@ jobs:
           release-type: python
           signoff: Bowen Tan <bowentan78@gmail.com>
           prerelease: true
+          changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"chore","section":"Miscellaneous","hidden":false}]'
+          extra-files: |
+            action.yml
+            .github/workflows/build-publish.yml
+            Dockerfile
+            README.rst
       - uses: actions/checkout@v3
       - name: tag major and minor versions
         if: ${{ steps.release.outputs.release_created }}
