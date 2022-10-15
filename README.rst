@@ -10,9 +10,13 @@ glob-linters
         :target: https://glob-linters.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://github.com/bowentan/glob-linters/actions/workflows/build-publish.yml/badge.svg
+..
+  x-release-please-start-version
+.. image:: https://github.com/bowentan/glob-linters/actions/workflows/build-publish.yml/badge.svg?branch=v0.1.0-rc.27
         :target: https://github.com/bowentan/glob-linters/actions/workflows/build-publish.yml
         :alt: Build and publish
+..
+  x-release-please-end
 
 
 glob-linters is an integtated tool to lint multiple programming and scripting languages
@@ -99,6 +103,8 @@ contents:
                 uses: bowentan/glob-linters@v0
                 env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+To use a specific version, replace ``v0``.
 
 You can control the workflow by creating a configuration file named as
 ``.github/glob-linters.ini`` and a sample configuration is given below:
