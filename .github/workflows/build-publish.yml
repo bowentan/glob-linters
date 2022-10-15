@@ -77,14 +77,12 @@ jobs:
       - name: Parse version
         id: parse_version
         run: |
-          echo ${{ steps.meta.outputs.tags }} | awk '{split($1, ver, "-"); split(substr(ver[1], 2, length(ver[1])), pub, "."); print "major="pub[1]"\nminor="pub[2]"\npatch="pub[3]}' >> $GITHUB_OUTPUT
+          echo "${{ steps.meta.outputs.tags }}" | awk 'BEGIN {pre = 0} {if ($1 !~ /latest/) {split($1, tag, ":"); imagename = tag[1]; split(tag[2], ver, "-"); split(substr(ver[1], 2, length(ver[1])), pub, "."); if (ver[2] == "") {s[1] = $1","imagename":v"pub[1]} else {pre = 1; s[1] = $1}} else {s[2] = $1}} END {if (pre == 0) {print "tags="s[1]","s[2]} else {print "tags="s[1]}}' >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
           push: true
-          tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v${{ steps.parse_version.outputs.major }}
-            ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.parse_version.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
