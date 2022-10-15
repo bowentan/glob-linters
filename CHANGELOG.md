@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/bowentan/glob-linters/compare/v0.2.0...v0.2.1) (2022-10-15)
+
+
+### Bug Fixes
+
+* version bump bug test ([#78](https://github.com/bowentan/glob-linters/issues/78)) ([6809d80](https://github.com/bowentan/glob-linters/commit/6809d80af5097da6d0fefa9cd7af2530e27b7ba8))
+
 ## [0.2.0](https://github.com/bowentan/glob-linters/compare/v0.1.1...v0.2.0) (2022-10-15)
 
 
