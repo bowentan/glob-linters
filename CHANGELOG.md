@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.0](https://github.com/bowentan/glob-linters/compare/v0.1.0-rc.27...v0.1.0) (2022-10-15)
+
+
+### Bug Fixes
+
+* add a fix commit ([#73](https://github.com/bowentan/glob-linters/issues/73)) ([4ccd4da](https://github.com/bowentan/glob-linters/commit/4ccd4da34d210603c5a3cd03a8111ac724345e34))
+
+
+### Miscellaneous Chores
+
+* finalize-0.1.0-branch-1 ([#70](https://github.com/bowentan/glob-linters/issues/70)) ([994a782](https://github.com/bowentan/glob-linters/commit/994a78277df6212b9737fa608a2c59cd6bf0397e))
+* manual release ([bc2f7b2](https://github.com/bowentan/glob-linters/commit/bc2f7b2f5377c28c1d2de268f4205d109dfaaa55))
+
 ## [0.1.0-rc.27](https://github.com/bowentan/glob-linters/compare/v0.1.0-rc.26...v0.1.0-rc.27) (2022-10-13)
 
 
