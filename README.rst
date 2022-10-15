@@ -23,7 +23,6 @@ glob-linters is an integtated tool to lint multiple programming and scripting la
 and can be used as a normal command line in terminals as well as a workflow in GtiHub
 actions.
 
-
 * Free software: MIT license
 * Documentation: https://glob-linters.readthedocs.io/.
 
