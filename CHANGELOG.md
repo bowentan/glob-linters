@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.2.2](https://github.com/bowentan/glob-linters/compare/v0.2.1...v0.2.2) (2022-10-15)
+
+
+### Bug Fixes
+
+* `__init__.py` was not updated ([#80](https://github.com/bowentan/glob-linters/issues/80)) ([7eb1ec2](https://github.com/bowentan/glob-linters/commit/7eb1ec203fd4b95e7f901fefa1abb07a6feb63a1))
+
+
+### Miscellaneous
+
+* add `changelog-types` ([#83](https://github.com/bowentan/glob-linters/issues/83)) ([b77d714](https://github.com/bowentan/glob-linters/commit/b77d714c2bc1b322ce62788105bea9c7874aace2))
+* remove bump2version config ([#82](https://github.com/bowentan/glob-linters/issues/82)) ([aa80747](https://github.com/bowentan/glob-linters/commit/aa80747aff60a7b37d2430ae49bc06e00d5d96f6))
+
 ## [0.2.1](https://github.com/bowentan/glob-linters/compare/v0.2.0...v0.2.1) (2022-10-15)
 
 
