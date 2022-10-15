@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/bowentan/glob-linters/compare/v0.1.0...v0.1.1) (2022-10-15)
+
+
+### Miscellaneous Chores
+
+* release 0.1.1 ([#74](https://github.com/bowentan/glob-linters/issues/74)) ([e6d7918](https://github.com/bowentan/glob-linters/commit/e6d7918336b8e54b4a9284164584393bcf9aaae0))
+
 ## [0.1.0](https://github.com/bowentan/glob-linters/compare/v0.1.0-rc.27...v0.1.0) (2022-10-15)
 
 
