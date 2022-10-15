@@ -3,4 +3,4 @@ author: "bowentan"
 description: "Multi-language linters"
 runs:
   using: docker
-  image: "docker://ghcr.io/bowentan/glob-linters:v0.1.0" # x-release-please-version
+  image: "docker://ghcr.io/bowentan/glob-linters:v0.1.1" # x-release-please-version
