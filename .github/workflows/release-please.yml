@@ -14,12 +14,12 @@ jobs:
         with:
           token: ${{ secrets.GH_AC_PAT }}
           release-type: python
-          signoff: Bowen Tan <bowentan78@gmail.com>
           prerelease: true
           extra-files: |
             action.yml
             .github/workflows/build-publish.yml
             Dockerfile
+            glob_linters/__init__.py
             README.rst
       - uses: actions/checkout@v3
       - name: tag major and minor versions
