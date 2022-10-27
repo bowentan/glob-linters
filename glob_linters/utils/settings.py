@@ -8,6 +8,7 @@ import os
 import re
 import subprocess
 import sys
+from ast import literal_eval
 from dataclasses import dataclass
 from typing import Callable, ClassVar
 
@@ -111,7 +112,7 @@ class Configs:
             ),
         },
         "env": {
-            "debug": lambda x: setattr(Configs, "debug", x),
+            "debug": lambda x: setattr(Configs, "debug", literal_eval(x)),
             ".cpp.linters": lambda x: getattr(Configs, "linters_enabled").update(
                 {".cpp": re.split(r",\s", x)}
             ),
