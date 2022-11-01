@@ -20,6 +20,7 @@ class Linter:
         self.cmd_result: subprocess.CompletedProcess
         self.stdout: list[str]
         self.stderr: list[str]
+        self.config_file: str = ""
         self.use_config_file: bool = False
 
     def lint(self, filename: str) -> int:
@@ -89,6 +90,7 @@ class ClangFormat(Linter):
             os.remove(self.DEFAULT_CONFIG_FILE_PATH)
         os.symlink(filepath, self.DEFAULT_CONFIG_FILE_PATH)
         self.use_config_file = True
+        self.config_file = filepath
 
 
 class Cpplint(Linter):
@@ -105,6 +107,7 @@ class Cpplint(Linter):
             os.remove(self.DEFAULT_CONFIG_FILE_PATH)
         os.symlink(filepath, self.DEFAULT_CONFIG_FILE_PATH)
         self.use_config_file = True
+        self.config_file = filepath
 
 
 # Linters for Python
@@ -121,6 +124,7 @@ class Pylint(Linter):
         super().set_config_file(filepath)
         self.options.extend(["--rcfile", filepath])
         self.use_config_file = True
+        self.config_file = filepath
 
     def process_output(self) -> None:
         if self.cmd_result.returncode != 0:
@@ -140,6 +144,7 @@ class Flake8(Linter):
         super().set_config_file(filepath)
         self.options.extend(["--config", filepath])
         self.use_config_file = True
+        self.config_file = filepath
 
     def process_output(self) -> None:
         if self.cmd_result.returncode != 0:
@@ -163,6 +168,7 @@ class Black(Linter):
         super().set_config_file(filepath)
         self.options.extend(["--config", filepath])
         self.use_config_file = True
+        self.config_file = filepath
 
     def process_output(self) -> None:
         if self.cmd_result.returncode != 0:
@@ -187,6 +193,7 @@ class Isort(Linter):
         super().set_config_file(filepath)
         self.options.extend(["--settings-file", filepath])
         self.use_config_file = True
+        self.config_file = filepath
 
     def process_output(self) -> None:
         if self.cmd_result.returncode != 0:
@@ -211,6 +218,7 @@ class Mypy(Linter):
         super().set_config_file(filepath)
         self.options.extend(["--config-file", filepath])
         self.use_config_file = True
+        self.config_file = filepath
 
     def process_output(self) -> None:
         if self.cmd_result.returncode != 0:

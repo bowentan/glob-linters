@@ -1,6 +1,7 @@
 """Configuration"""
 # Configuration vairables and defaults
 # pylint: disable=subprocess-run-check
+# import argparse
 import argparse
 import configparser
 import logging
@@ -10,20 +11,22 @@ import subprocess
 import sys
 from ast import literal_eval
 from dataclasses import dataclass
-from typing import Callable, ClassVar
+from functools import reduce
+from typing import ClassVar
 
 from glob_linters import linters
 
 # Default config file
 DEFAULT_CONFIG_FILE_PATH: str = ".github/glob-linters.ini"
-MYPY_PACKAGE_REQUIREMENTS_FILE_PATH: str = os.path.abspath(
-    ".github/mypy_requirements.txt"
-)
 
 # Supported file extension/suffix
 SUPPORTED_FILE_SUFFIXES: list[str] = [".cpp", ".py"]
 
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+stream = logging.StreamHandler()
+stream.setFormatter(logging.Formatter("%(asctime)s - [%(levelname)s] : %(message)s"))
+logger.addHandler(stream)
 
 
 @dataclass
@@ -61,143 +64,38 @@ class Configs:
         ".py": ["pylint", "flake8", "black", "isort", "mypy"],
     }
 
-    # Available configs
-    # set_configs: ClassVar[dict[str, dict[str, Callable]]] = {
-    #     "target": {
-    #         "target_dir": lambda x: setattr(Configs, "target_dir", x),
-    #         "target_suffix": lambda x: setattr(
-    #             Configs, "target_suffix", re.split(r"[,\s]", x)
-    #         ),
-    #     },
-    #     "executable": {
-    #         """
-    #         TODO: implement the member function for setting configs and add
-    #         corresponding dict pairs for parsing configs and command line options
-    #         """
-    #         # Clang
-    #         "cpplint": lambda x: setattr(Configs.cpplint, "executable", x),
-    #         "cpplint.options": lambda x: setattr(
-    #             Configs.cpplint,
-    #             "options",
-    #             Configs.cpplint.options + re.split(r"[,\s]", x),
-    #         ),
-    #         "clang_format": lambda x: setattr(Configs.clang_format, "executable", x),
-    #         "clang_format.options": lambda x: setattr(
-    #             Configs.clang_format,
-    #             "options",
-    #             Configs.clang_format.options + re.split(r"[,\s]", x),
-    #         ),
-    #         # Python
-    #         "pylint": lambda x: setattr(Configs.pylint, "executable", x),
-    #         "pylint.options": lambda x: setattr(
-    #             Configs.pylint,
-    #             "options",
-    #             Configs.pylint.options + re.split(r"[,\s]", x),
-    #         ),
-    #         "flake8": lambda x: setattr(Configs.flake8, "executable", x),
-    #         "flake8.options": lambda x: setattr(
-    #             Configs.flake8,
-    #             "options",
-    #             Configs.flake8.options + re.split(r"[,\s]", x),
-    #         ),
-    #         "black": lambda x: setattr(Configs.black, "executable", x),
-    #         "black.options": lambda x: setattr(
-    #             Configs.black, "options", Configs.black.options + re.split(r"[,\s]", x)
-    #         ),
-    #         "isort": lambda x: setattr(Configs.isort, "executable", x),
-    #         "isort.options": lambda x: setattr(
-    #             Configs.isort, "options", Configs.isort.options + re.split(r"[,\s]", x)
-    #         ),
-    #         "mypy": lambda x: setattr(Configs.mypy, "executable", x),
-    #         "mypy.options": lambda x: setattr(
-    #             Configs.mypy, "options", Configs.mypy.options + re.split(r"[,\s]", x)
-    #         ),
-    #     },
-    #     "env": {
-    #         "debug": lambda x: setattr(Configs, "debug", literal_eval(x)),
-    #         ".cpp.linters": lambda x: getattr(Configs, "linters_enabled").update(
-    #             {".cpp": re.split(r",\s", x)}
-    #         ),
-    #         ".cpp.disable_linters": lambda x: getattr(
-    #             Configs, "linters_enabled"
-    #         ).update(
-    #             {
-    #                 ".cpp": [
-    #                     value
-    #                     for value in Configs.linters_enabled[".cpp"]
-    #                     if value not in re.split(r"[,\s]", x)
-    #                 ]
-    #             }
-    #         ),
-    #         ".py.linters": lambda x: getattr(Configs, "linters_enabled").update(
-    #             {".py": re.split(r"[,\s]", x)}
-    #         ),
-    #         ".py.disable_linters": lambda x: getattr(Configs, "linters_enabled").update(
-    #             {
-    #                 ".py": [
-    #                     value
-    #                     for value in Configs.linters_enabled[".py"]
-    #                     if value not in re.split(r"[,\s]", x)
-    #                 ]
-    #             }
-    #         ),
-    #     },
-    #     # "config-file": {
-    #     #     "cpplint": lambda: os.symlink(
-    #     #         os.path.join(USER_DEFIEND_LINTER_CONFIG_ROOT, "CPPLINT.cfg"),
-    #     #         "CPPLINT.cfg",
-    #     #     )
-    #     #     if os.path.exists(
-    #     #         os.path.join(USER_DEFIEND_LINTER_CONFIG_ROOT, "CPPLINT.cfg")
-    #     #     )
-    #     #     else -1,
-    #     #     "clang_format": lambda: os.symlink(
-    #     #         os.path.join(USER_DEFIEND_LINTER_CONFIG_ROOT, ".clang-format"),
-    #     #         ".clang-format",
-    #     #     )
-    #     #     if os.path.exists(
-    #     #         os.path.join(USER_DEFIEND_LINTER_CONFIG_ROOT, ".clang-format")
-    #     #     )
-    #     #     else -1,
-    #     #     "pylint": lambda: Configs.pylint.options.extend(
-    #     #         ["--rcfile", os.path.join(USER_DEFIEND_LINTER_CONFIG_ROOT, ".pylintrc")]
-    #     #     )
-    #     #     if os.path.exists(
-    #     #         os.path.join(USER_DEFIEND_LINTER_CONFIG_ROOT, ".pylintrc")
-    #     #     )
-    #     #     else -1,
-    #     #     "flake8": lambda: Configs.flake8.options.extend(
-    #     #         ["--config", os.path.join(USER_DEFIEND_LINTER_CONFIG_ROOT, ".flake8")]
-    #     #     )
-    #     #     if os.path.exists(os.path.join(USER_DEFIEND_LINTER_CONFIG_ROOT, ".flake8"))
-    #     #     else -1,
-    #     #     "black": lambda: Configs.black.options.extend(
-    #     #         ["--config", os.path.join(USER_DEFIEND_LINTER_CONFIG_ROOT, ".black")]
-    #     #     )
-    #     #     if os.path.exists(os.path.join(USER_DEFIEND_LINTER_CONFIG_ROOT, ".black"))
-    #     #     else -1,
-    #     #     "isort": lambda: Configs.isort.options.extend(
-    #     #         [
-    #     #             "--settings-file",
-    #     #             os.path.join(USER_DEFIEND_LINTER_CONFIG_ROOT, ".isort.cfg"),
-    #     #         ]
-    #     #     )
-    #     #     if os.path.exists(
-    #     #         os.path.join(USER_DEFIEND_LINTER_CONFIG_ROOT, ".isort.cfg")
-    #     #     )
-    #     #     else -1,
-    #     #     "mypy": lambda: Configs.mypy.options.extend(
-    #     #         [
-    #     #             "--config-file",
-    #     #             os.path.join(USER_DEFIEND_LINTER_CONFIG_ROOT, ".mypy.ini"),
-    #     #         ]
-    #     #     )
-    #     #     if os.path.exists(
-    #     #         os.path.join(USER_DEFIEND_LINTER_CONFIG_ROOT, ".mypy.ini")
-    #     #     )
-    #     #     else -1,
-    #     # },
-    # }
+    # "suffix:linter_name"
+    available_suffix_linters: ClassVar[list[str]] = reduce(
+        lambda x, y: x + y,
+        map(
+            lambda items: list(map(lambda v: f"{items[0]}:{v}", items[1])),
+            linters_enabled.items(),
+        ),
+    )
+
+    available_configs: ClassVar[dict[str, list[str]]] = {
+        "DEFAULT": [],
+        "target": ["dirs", "suffixes"],
+        "env": ["debug", "extra_python_requirement"],
+    }
+    available_configs.update(
+        dict(
+            zip(
+                SUPPORTED_FILE_SUFFIXES,
+                [["enabled_linters", "disabled_linters"]]
+                * len(SUPPORTED_FILE_SUFFIXES),
+            )
+        )
+    )
+    available_configs.update(
+        dict(
+            zip(
+                available_suffix_linters,
+                [["executable", "options", "config_file"]]
+                * len(available_suffix_linters),
+            )
+        )
+    )
 
 
 def parse_config_file(config_file: str) -> None:
@@ -213,26 +111,78 @@ def parse_config_file(config_file: str) -> None:
     ValueError
         Invalid section/option found in config file
     """
+
+    def _target_section(section: str, option: str) -> None:
+        if option == "dirs":
+            Configs.target_dirs = re.split(r"[,\s]", config_parser[section][option])
+        if option == "suffixes":
+            diff = set(re.split(r"[,\s]", config_parser[section][option])) - set(
+                SUPPORTED_FILE_SUFFIXES
+            )
+            if len(diff) > 0:
+                raise ValueError(f"No such suffixes supported: {diff}")
+            Configs.target_suffixes = re.split(r"[,\s]", config_parser[section][option])
+
+    def _env_section(section: str, option: str) -> None:
+        if option == "debug":
+            Configs.debug = literal_eval(config_parser[section][option])
+        if option == "extra_python_requirement":
+            logger.info("*" * 120)
+            for filename in re.split(r"[,\s]", config_parser[section][option]):
+                _install_extra_python_requirements(filename)
+            logger.info("*" * 120)
+
+    def _lang_section(section: str, option: str) -> None:
+        values = re.split(r"[,\s]", config_parser[section][option])
+        diff = set(values) - set(Configs.linters_enabled[section])
+        if len(diff) > 0:
+            raise ValueError(f"No such linters supported: {diff}")
+        if option == "enabled_linters":
+            Configs.linters_enabled[section] = values
+        if option == "disabled_linters":
+            Configs.linters_enabled[section] = [
+                e for e in Configs.linters_enabled[section] if e not in values
+            ]
+
+    def _lang_linter_section(section: str, option: str) -> None:
+        _, linter_name = section.split(":")
+        if option == "executable":
+            getattr(Configs, linter_name).executable = config_parser[section][option]
+        if option == "options":
+            getattr(Configs, linter_name).options.extend(
+                re.split(r"[,\s]", config_parser[section][option])
+            )
+        if option == "config_file":
+            value = config_parser[section][option]
+            if value is None or value == "":
+                raise ValueError(f"No configuration file given for option {option}")
+            getattr(Configs, linter_name).set_config_file(value)
+
     config_parser = configparser.ConfigParser()
     config_parser.read(config_file)
     for section in config_parser:
-        if section not in ["target", "env"] + Configs.linters_enabled
-
-    for section in config_parser:
-        if section == "DEFAULT":
-            continue
-        if section not in Configs.set_configs:
+        if section not in Configs.available_configs:
             raise ValueError(f"No such section supported: {section}")
         for option in config_parser[section]:
-            if option not in config_parser[section]:
-                raise ValueError(f"No such option supported: {option}")
-            if option == "target_suffix":
-                diff = set(re.split(r"[,\s]", config_parser[section][option])) - set(
-                    SUPPORTED_FILE_SUFFIX
-                )
-                if len(diff) > 0:
-                    raise ValueError(f"No supported file suffix: {diff}")
-            Configs.set_configs[section][option](config_parser[section][option])
+            if option not in Configs.available_configs[section]:
+                raise ValueError(f"No such option supported: {section}.{option}")
+            if (
+                config_parser[section][option] is None
+                or config_parser[section][option] == ""
+            ):
+                raise ValueError(f"Null value found for {section}.{option}")
+            # [target] section
+            if section == "target":
+                _target_section(section, option)
+            # [env] section
+            elif section == "env":
+                _env_section(section, option)
+            # [language] section
+            elif ":" not in section:
+                _lang_section(section, option)
+            # [language:linter] section
+            else:
+                _lang_linter_section(section, option)
 
 
 def parse_args(args: argparse.Namespace) -> None:
@@ -248,57 +198,89 @@ def parse_args(args: argparse.Namespace) -> None:
     ValueError
         Invalid linter name found
     """
-    if os.path.exists(args.config_file):
-        parse_config_file(args.config_file)
-    else:
-        Configs.debug = args.debug
-        Configs.target_dir = args.target_dir
-        Configs.target_suffix = re.split(r"\s", args.target_suffix)
-        if args.configs is not None:
-            for key, value in map(lambda x: re.split("=", x), args.configs):
-                if key in Configs.set_configs["executable"]:
-                    if "options" in key:
-                        Configs.set_configs["executable"][key](value)
-                    else:
-                        Configs.set_configs["executable"][key](value)
-                elif key in Configs.set_configs["env"]:
-                    Configs.set_configs["env"][key](value)
-                else:
-                    raise ValueError(f"No such linter supported: {key}")
+
+    def _enabled_linters() -> None:
+        # Record linters given language by language
+        enabled_linters: dict[str, list[str]] = {}
+        for val in args.enabled_linters:
+            lang, linter_name = val.split(":")
+            if lang not in SUPPORTED_FILE_SUFFIXES:
+                raise ValueError(f"No such language supported: {lang}")
+            if linter_name not in Configs.linters_enabled[lang]:
+                raise ValueError(f"No such linter supported: {lang}:{linter_name}")
+            if lang in enabled_linters:
+                enabled_linters[lang].append(linter_name)
+            else:
+                enabled_linters.update({lang: [linter_name]})
+        # Assign the given linters
+        for lang, linter_names in enabled_linters.items():
+            Configs.linters_enabled[lang] = linter_names
+
+    def _disabled_linters() -> None:
+        disabled_linters: dict[str, list[str]] = {}
+        for val in args.disabled_linters:
+            lang, linter_name = val.split(":")
+            if lang not in SUPPORTED_FILE_SUFFIXES:
+                raise ValueError(f"No such language supported: {lang}")
+            if linter_name not in Configs.linters_enabled[lang]:
+                raise ValueError(f"No such linter supported: {lang}:{linter_name}")
+            if lang in disabled_linters:
+                disabled_linters[lang].append(linter_name)
+            else:
+                disabled_linters.update({lang: [linter_name]})
+        # Assign the given linters
+        for lang, linter_names in disabled_linters.items():
+            Configs.linters_enabled[lang] = [
+                e for e in Configs.linters_enabled[lang] if e not in linter_names
+            ]
+
+    def _linter_settings() -> None:
+        for val in args.linter_settings:
+            option, values = val.split("=")
+            lang, option = option.split(":")
+            linter_name, option = option.split(".")
+            if lang not in SUPPORTED_FILE_SUFFIXES:
+                raise ValueError(f"No such language supported: {lang}")
+            if linter_name not in Configs.linters_enabled[lang]:
+                raise ValueError(f"No such linter supported: {lang}:{linter_name}")
+            if option not in Configs.available_configs[f"{lang}:{linter_name}"]:
+                raise ValueError(
+                    f"No such option supported: {lang}:{linter_name}.{option}"
+                )
+            if option == "executable":
+                getattr(Configs, linter_name).executable = values
+            if option == "options":
+                values = re.split(r"[,\s]", values)
+                getattr(Configs, linter_name).options.extend(values)
+            if option == "config_file":
+                getattr(Configs, linter_name).set_config_file(values)
+
+    Configs.debug = args.debug
+    Configs.target_dirs = args.target_dirs
+    Configs.target_suffixes = args.target_suffixes
+    if args.enabled_linters is not None:
+        _enabled_linters()
+    if args.disabled_linters is not None:
+        _disabled_linters()
+    if args.linter_settings is not None:
+        _linter_settings()
 
 
-def install_mypy_package_requirements() -> None:
-    """Install additional packages for mypy linting"""
-    if not os.path.exists(MYPY_PACKAGE_REQUIREMENTS_FILE_PATH):
-        logger.info("Not found mypy_requirements.txt, skip package installation")
-        return
-    logger.info("Install packages for mypy checking...")
-    cmd = ["pip", "install", "-r", MYPY_PACKAGE_REQUIREMENTS_FILE_PATH]
-    logger.debug("Install command: %s", " ".join(cmd))
+def _install_extra_python_requirements(requirement_file: str) -> None:
+    """Install additional packages for linting"""
+    if not os.path.exists(requirement_file):
+        raise FileNotFoundError(f"No such file or directory: {requirement_file}")
+    logger.info("Install extra python packages with %s...", requirement_file)
+    cmd = ["pip", "install", "-r", requirement_file]
+    logger.info("Install command: %s", " ".join(cmd))
     cmd_result = subprocess.run(cmd, capture_output=True)
 
-    logger.debug("Installation output:")
+    logger.info("Installation output:")
     for line in cmd_result.stdout.decode().strip().split("\n"):
-        logger.debug("\t%s", line)
+        logger.info("\t%s", line)
 
     if cmd_result.returncode != 0:
         logger.error("Package installaltion failed:")
         for line in cmd_result.stderr.decode().strip().split("\n"):
             logger.error("\t%s", line)
         sys.exit(1)
-
-
-# TODO: this may be deleted
-def load_linter_configs() -> None:
-    """Load config file for each enabled linter"""
-    for ext in Configs.target_suffix:
-        for linter_name in Configs.linters_enabled[ext]:
-            logger.debug("Setting linter config for [%s]", linter_name)
-            getattr(Configs, linter_name).set_config_file()
-            if getattr(Configs, linter_name).use_config_file:
-                logger.debug("Used given configuration for [%s]", linter_name)
-            # Check whether set config file
-            # If set, return None, -1 otherwise
-            # return_value = Configs.set_configs["config-file"][linter_name]()
-            # if return_value is None:
-            #     getattr(Configs, linter_name).use_config_file = True
