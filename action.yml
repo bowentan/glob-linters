@@ -1,6 +1,9 @@
 name: "glob-linters"
 author: "bowentan"
 description: "Multi-language linters"
+branding:
+  icon: "check-square"
+  color: "green"
 runs:
   using: docker
   image: "docker://ghcr.io/bowentan/glob-linters:v0.2.2" # x-release-please-version

@@ -105,3 +105,6 @@ ENV/
 .idea/
 
 debug/
+
+# Dev platform
+gpg-test.sh

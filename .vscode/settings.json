@@ -21,4 +21,5 @@
         "--show-column-numbers",
         "--no-pretty"
     ],
+    "hadolint.hadolintPath": "/home/tanbowen/.conda/envs/glob-linters/bin/hadolint",
 }

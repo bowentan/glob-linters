@@ -2,7 +2,9 @@
 
 """Tests for `glob_linters` package."""
 
-import pytest  # pylint: disable=import-error
+# pylint: disable=unused-argument
+
+import pytest
 
 # from glob_linters import glob_linters
 

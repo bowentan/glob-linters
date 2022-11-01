@@ -13,17 +13,18 @@ def _parse_args(args: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-d",
-        "--target-dir",
-        dest="target_dir",
-        default=settings.Configs.target_dir,
+        "--target-dirs",
+        dest="target_dirs",
+        default=settings.Configs.target_dirs,
+        nargs="*",
         type=str,
         help="Target directory containing files to be linted",
     )
     parser.add_argument(
         "-s",
-        "--file-suffix",
-        dest="target_suffix",
-        default=" ".join(settings.Configs.target_suffix),
+        "--target-suffixes",
+        dest="target_suffixes",
+        default=settings.Configs.target_suffixes,
         nargs="*",
         type=str,
         help="Target file extensions, like '.cpp', '.py'",
@@ -33,22 +34,51 @@ def _parse_args(args: list[str]) -> argparse.Namespace:
         "--enable-debug",
         dest="debug",
         action="store_true",
-        help="Enable debug mode, output debugging information",
+        help="Enable debug mode, output debusgging information",
+    )
+    parser.add_argument(
+        "-E",
+        "--enable-linters",
+        dest="enabled_linters",
+        default=None,
+        nargs="*",
+        type=str,
+        help="Enable specific linters to use",
+    )
+    parser.add_argument(
+        "-D",
+        "--disable-linters",
+        dest="disabled_linters",
+        default=None,
+        nargs="*",
+        type=str,
+        help="Disable specific linters to use",
+    )
+    parser.add_argument(
+        "-x",
+        "--extra-python-package-requirements",
+        dest="extra_python_package_requirements",
+        default=None,
+        nargs="*",
+        type=str,
+        help="Extra python requirements file like for mypy extensions",
     )
     parser.add_argument(
         "-c",
-        "--configs",
-        dest="configs",
+        "--linter-settings",
+        dest="linter_settings",
         default=None,
-        nargs="+",
-        help="Set configuration, use `key=value` format and"
-        "separate multiple pairs by comma or space",
+        nargs="*",
+        type=str,
+        help="Set configuration for linters, use `key=value` format and"
+        "separate multiple pairs by space",
     )
     parser.add_argument(
         "-C",
         "--config-file",
         dest="config_file",
-        default=settings.DEFAULT_CONFIG_FILE_PATH,
+        default=None,
+        type=str,
         help="glob_linters configuration file (glob-linter.ini) path",
     )
     return parser.parse_args(args)
@@ -56,11 +86,11 @@ def _parse_args(args: list[str]) -> argparse.Namespace:
 
 def _parse_config() -> None:
     args = _parse_args(sys.argv[1:])
-
-    if os.path.exists(settings.DEFAULT_CONFIG_FILE_PATH):
-        settings.Configs.has_read_config_file = True
-        settings.parse_config_file(settings.DEFAULT_CONFIG_FILE_PATH)
-    elif len(sys.argv) > 1:
+    if args.config_file is not None:
+        if os.path.exists(args.config_file):
+            settings.Configs.has_read_config_file = True
+            settings.parse_config_file(args.config_file)
+    else:
         settings.parse_args(args)
 
 
@@ -100,11 +130,6 @@ def main() -> int:
     _set_logger()
 
     logger.info("=" * 120)
-    settings.load_linter_configs()
-    logger.info("-" * 120)
-    settings.install_mypy_package_requirements()
-
-    logger.info("=" * 120)
     if settings.Configs.has_read_config_file:
         logger.info("Configuration file found, used that")
     else:
@@ -112,11 +137,13 @@ def main() -> int:
     io.print_configs()
 
     # Scan files
-    logger.info("Starting directory scan: %s", settings.Configs.target_dir)
+    logger.info("Starting directory scan: %s", settings.Configs.target_dirs)
     logger.info("Target suffix:")
-    for suffix in settings.Configs.target_suffix:
+    for suffix in settings.Configs.target_suffixes:
         logger.info("\t%s", suffix)
-    target_files = io.scan(settings.Configs.target_dir, settings.Configs.target_suffix)
+    target_files = io.scan(
+        settings.Configs.target_dirs, settings.Configs.target_suffixes
+    )
     logger.info("Target file list:")
     for lang, files in target_files.items():
         for file in files:
