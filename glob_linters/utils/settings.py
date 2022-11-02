@@ -76,7 +76,7 @@ class Configs:
     available_configs: ClassVar[dict[str, list[str]]] = {
         "DEFAULT": [],
         "target": ["dirs", "suffixes"],
-        "env": ["debug", "extra_python_requirement"],
+        "env": ["debug", "extra_python_package_requirements"],
     }
     available_configs.update(
         dict(
@@ -126,10 +126,10 @@ def parse_config_file(config_file: str) -> None:
     def _env_section(section: str, option: str) -> None:
         if option == "debug":
             Configs.debug = literal_eval(config_parser[section][option])
-        if option == "extra_python_requirement":
+        if option == "extra_python_package_requirements":
             logger.info("*" * 120)
             for filename in re.split(r"[,\s]", config_parser[section][option]):
-                _install_extra_python_requirements(filename)
+                _install_extra_python_package_requirementss(filename)
             logger.info("*" * 120)
 
     def _lang_section(section: str, option: str) -> None:
@@ -266,7 +266,7 @@ def parse_args(args: argparse.Namespace) -> None:
         _linter_settings()
 
 
-def _install_extra_python_requirements(requirement_file: str) -> None:
+def _install_extra_python_package_requirementss(requirement_file: str) -> None:
     """Install additional packages for linting"""
     if not os.path.exists(requirement_file):
         raise FileNotFoundError(f"No such file or directory: {requirement_file}")

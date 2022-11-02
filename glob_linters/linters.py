@@ -8,7 +8,7 @@ import subprocess
 logger = logging.getLogger(__name__)
 
 # User-defined linter config directory for GitHub action
-USER_DEFIEND_LINTER_CONFIG_ROOT: str = os.path.abspath(".github/linter-configs")
+USER_DEFIEND_LINTER_CONFIG_ROOT: str = ".github/linter-configs"
 
 
 class Linter:
