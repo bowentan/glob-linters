@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0](https://github.com/bowentan/glob-linters/compare/v0.2.2...v0.3.0) (2022-11-02)
+
+
+### Features
+
+* add some small tests ([#90](https://github.com/bowentan/glob-linters/issues/90)) ([d5dfa14](https://github.com/bowentan/glob-linters/commit/d5dfa14c2a86431e0754390ae1004753107ef487))
+
+
+### Bug Fixes
+
+* [BUG] `debug` mode cannot disabled [#86](https://github.com/bowentan/glob-linters/issues/86) ([#87](https://github.com/bowentan/glob-linters/issues/87)) ([99c2bfa](https://github.com/bowentan/glob-linters/commit/99c2bfa814547c85354080b2d9455b1a8c2e4540))
+
 ## [0.2.2](https://github.com/bowentan/glob-linters/compare/v0.2.1...v0.2.2) (2022-10-15)
 
 
