@@ -5,37 +5,91 @@ Usage
 When using glob-linters as a command line tool, you can use both command line options
 and configuration file to control the parameters for linting.
 
-Command options
----------------
+Command line options
+--------------------
 
 .. note::
         The command line options will be overwritten by
         :ref:`configuration file <configuration-file>` . All given
         arguments will ignored if you use configuration file.
 
-You can use :program:`glob_linters` as a command line tool if you want to lint your
+You can use :program:`glob-linters` as a command line tool if you want to lint your
 codes or test your GitHub action workflow in local terminals.
 
-.. program:: glob_linters
+.. program:: glob-linters
 
-.. option:: -d [TARGET_DIR], --target-dir [TARGET_DIR]
+.. option:: -d [TARGET_DIR], --target-dirs [TARGET_DIR ...]
 
-        Specify the directory to be scanned for files to be linted.
+        Specify the directory to be scanned for files to be linted, could be multiple
+        values separated by space.
 
-        Default: :file:`.`, the current working directory when :program:`glob_linters` is
+        Default: :file:`.`, the current working directory when :program:`glob-linters` is
         called.
 
-        Keyword in configuration file: :code:`target_dir`.
+        Keyword in configuration file: :code:`target.dirs`.
 
-.. option:: -s [TARGET_SUFFIX ...], --file-suffix [TARGET_SUFFIX ...]
+.. option:: -s [TARGET_SUFFIX ...], --target-suffixes [TARGET_SUFFIX ...]
 
         Extensions of files to be linted, e.g., :file:`.cpp`, :file:`.py`, and can be
-        given more than one, separated by comma or space. For example,
-        :samp:`--file-suffix .cpp .py`
+        given more than one, separated by comma or space.
 
         Default: all supported language extensions.
 
-        Keyword in configuration file: :code:`target_suffix`.
+        Keyword in configuration file: :code:`target.suffixes`.
+
+.. option:: -E [ENABLED_LINTER ...], --enable-linters [ENABLED_LINTER ...]
+
+        Enable specified linters to run. Only enabled linters will be run. The format of
+        the argument is :code:`{suffix}:{linter_name}`, e.g., :code:`.cpp:clang_format` and
+        :code:`.py:mypy`. Multiple arguments can be given.
+
+        Default: :code:`None`
+
+        Keyword in configuration: :code:`{suffix}.enabled_linters` such as
+        :code:`.cpp.enabled_linters`.
+
+.. option:: -D [DISABLED_LINTER ...], --disable-linters [DISABLED_LINTER ...]
+
+        Disable specified linters to run. Only enabled linters will be run. The format of
+        the argument is the same as :option:`glob-linters --enable-linters`
+
+        Default: :code:`None`
+
+        Keyword in configuration: :code:`{suffix}.disabled_linters` such as
+        :code:`.cpp.disabled_linters`.
+
+.. option:: -c [LINTER_SETTING ...], --linter-settings [LINTER_SETTING ...]
+        
+        Configure linters via command line arguments. Format is
+        :code:`{suffix}:{linter_name}.{arg}={value}` where :code:`arg` can be one of the following
+
+        * :code:`executable`, the path of linter executable
+        * :code:`config_file`, the path of linter configuration file
+        * :code:`options`, additional arguments feeded to linter
+
+        For example, :code:`.cpp:cpplint.executable=/home/bowentan/.local/bin/cpplint`.
+
+        Default: :code:`None`.
+
+        Keyword in configuration file: :code:`{suffix}:{linter_name}.{arg}`.
+
+.. option:: -x [EXTRA_PYTHON_PACKAGE_REQUIREMENTS ...], --extra-python-package-requirements [EXTRA_PYTHON_PACKAGE_REQUIREMENTS ...]
+        
+        Specify extra python packages which may be used in linting such as as Numpy
+        extension. The same format of general :file:`requirements.txt`. Multiple files
+        supported.
+
+        Default: :code:`None`
+
+        Keyword in configuration: :code:`env.extra_python_package_requirements`.
+
+.. option:: -C [CONFIG_FILE], --config-file [CONFIG_FILE]
+
+        :program:`glob-linters` configuration file (:file:`glob-linters.ini`) path.
+
+        Default: :file:`.github/glob-linters.ini`.
+
+        No keyword for this in configuration file.
 
 .. option:: -g, --enable-debug
 
@@ -43,36 +97,18 @@ codes or test your GitHub action workflow in local terminals.
 
         Default: disabled.
 
-        Keyword in configuration file: :code:`debug`.
-
-.. option:: -c [CONFIGS ...], --configs [CONFIGS ...]
-
-        Set configuration, use ``key=value`` format and separate multiple pairs by
-        comma or space.
-
-        Default: :code:`None`, i.e., use default values for all settings.
-
-        Keyword in configuration file: different key for different setting variables.
-        See :ref:`executable settings <excutable-config>`.
-
-.. option:: -C [CONFIG_FILE], --config-file [CONFIG_FILE]
-
-        :program:`glob_linters` configuration file (:file:`glob-linters.ini`) path.
-
-        Default: :file:`.github/glob-linters.ini`.
-
-        No keyword for this in configuration file.
+        Keyword in configuration file: :code:`env.debug`.
 
 Examples
 ~~~~~~~~
 
-By issuing :program:`glob_linters` in a directory like following:
+By issuing :program:`glob-linters` in a directory like following:
 
 .. code-block:: console
 
-        $ glob_linters
+        $ glob-linters
 
-without any options, :program:`glob_linters` will recursively scan the
+without any options, :program:`glob-linters` will recursively scan the
 directory to find files with all supported extensions using all default linters.
 
 To change the target directory to :file:`src/` and only lint :file:`.py` files,
@@ -80,14 +116,14 @@ add options:
 
 .. code-block:: console
 
-        $ glob_linters --target-dir src --target-suffix .py
+        $ glob-linters --target-dirs src --target-suffixes .py
 
 and if you also want to diasble :code:`flake8` and :code:`mypy` linters with debugging
 information, do this:
 
 .. code-block:: console
 
-        $ glob_linters --target-dir src --target-suffix .py --configs .py.disable_linters=flake8,mypy
+        $ glob-linters --target-dir src --target-suffix .py --disable-linters flake8 mypy
 
 
 .. _configuration-file:
@@ -104,147 +140,59 @@ local terminals.
 :code:`[target]`
 ~~~~~~~~~~~~~~~~
 
-:code:`target_dir = <TARGET_DIR>`
-        Work as the same with :option:`glob_linters --target-dir`.
+:code:`dirs = <TARGET_DIR>`
+        Work as the same with :option:`glob-linters --target-dirs`. Directories to be
+        scanned.
 
-:code:`target_suffix = <TARGET_SUFFIX ...>`
-        Work as the same with :option:`glob_linters --file-suffix`.
+        Default: :file:`.`
 
+:code:`suffixes = <TARGET_SUFFIX ...>`
+        Work as the same with :option:`glob-linters --target-suffixes`. File suffixes to
+        be scanned.
 
-.. _excutable-config:
+        Default: all supported file suffixes.
 
-:code:`[excutable]`
-~~~~~~~~~~~~~~~~~~~
+:code:`[{suffix}]`
+~~~~~~~~~~~~~~~~~~
 
-.. note::
-        The configuration file for each linter will overwrite the corresponding
-        :code:`.options`.
+:code:`enabled_linters = <...>`
+        Specify the linters to be run for files with :code:`{suffix}` suffix. Separate
+        multiple values by comma or space.
 
-:code:`cpplint = <exec>`
-        Specify the executable path of :program:`cpplint`. Can simply be
-        :code:`cpplint = cpplint` if it is included in :envvar:`PATH`.
+        Default: all supported linters.
 
-        Default: :code:`cpplint`.
+:code:`disabled_linters = <...>`
+        Disable the linters that will not be run for files with :code:`{suffix}` suffix.
+        Separate multiple values by comma or space.
 
-:code:`cpplint.options = <...>`
-        Specify the options that will passed to the executable. Format is the same as
-        given in command line, e.g.,
+        Default: :code:`None`.
 
-        .. code-block:: ini
+:code:`[{suffix}:{linter_name}]`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-                cpplint.options = --filter=-whitespace,+whitespace/braces --root=..
+:code:`executable = <path>`
+        Specify the path of executable of the linter :code:`{suffix}:linter_name`.
 
-        Default configuration file location: :file:`.github/linter-configs/CPPLINT.cfg`.
+        Default: the basename of the linter.
 
-:code:`clang_format = <exec>`
-        Specify the executable path of :program:`clang-format`. Can simply be
-        :code:`clang_format = clang-format` if it is included in :envvar:`PATH`.
+:code:`config_file = <path>`
+        Specify the path of configuration file of the linter :code:`{suffix}:linter_name`.
 
-:code:`clang_format.options = <...>`
-        Specify the options that will passed to the executable. Format is the same as
-        given in command line, e.g,
-
-        .. code-block:: ini
-
-                clang_format.options = --Werror --style=google
-
-        Default configuration file location: :file:`.github/linter-configs/.clang-format`.
-
-:code:`pylint = <exec>`
-        Specify the executable path of :program:`pylint`. Can simply be
-        :code:`pylint = pylint` if it is included in :envvar:`PATH`.
-
-:code:`pylint.options = <...>`
-        Specify the options that will passed to the executable. Format is the same as
-        given in command line, e.g,
-
-        .. code-block:: ini
-
-                pylint.options = --output-format=parseable
-
-        Default configuration file location: :file:`.github/linter-configs/.pylintrc`.
-
-:code:`flake8 = <exec>`
-        Specify the executable path of :program:`flake8`. Can simply be
-        :code:`flake8 = flake8` if it is included in :envvar:`PATH`.
-
-:code:`flake8.options = <...>`
-        Specify the options that will passed to the executable. Format is the same as
-        given in command line, e.g.,
-
-        .. code-block:: ini
-
-                flake8.options = --max-line-length 88
-
-        Default configuration file location: :file:`.github/linter-configs/.flake8`.
-
-:code:`black = <exec>`
-        Specify the executable path of :program:`black`. Can simply be
-        :code:`black = black` if it is included in :envvar:`PATH`.
-
-:code:`black.options = <...>`
-        Specify the options that will passed to the executable. Format is the same as
-        given in command line, e.g.,
-
-        .. code-block:: ini
-
-                black.options = --diff --check
-
-        Default configuration file location: :file:`.github/linter-configs/.black`.
-
-:code:`isort = <exec>`
-        Specify the executable path of :program:`isort`. Can simply be
-        :code:`isort = isort` if it is included in :envvar:`PATH`.
-
-:code:`isort.options = <...>`
-        Specify the options that will passed to the executable. Format is the same as
-        given in command line, e.g.,
-
-        .. code-block:: ini
-
-                isort.options = --line-length 88 --color
-
-        Default configuration file location: :file:`.github/linter-configs/.isort.cfg`.
-
-:code:`mypy = <exec>`
-        Specify the executable path of :program:`mypy`. Can simply be
-        :code:`mypy = mypy` if it is included in :envvar:`PATH`.
-
-:code:`mypy.options = <...>`
-        Specify the options that will passed to the executable. Format is the same as
-        given in command line, e.g.,
-
-        .. code-block:: ini
-
-                mypy.options = --cache-dir .
-
-        Default configuration file location: :file:`.github/linter-configs/.mypy.ini`.
+        Default: :code:`None`.
 
 :code:`[env]`
 ~~~~~~~~~~~~~
 
 :code:`debug = <True | False>`
-        Set :program:`glob_linters` to debugging mode.
+        Set :program:`glob-linters` to debugging mode.
 
         Default: :code:`False`.
 
-:code:`.cpp.linters = <...>`
-        Specify linters used for :file:`.cpp` files.
+:code:`extra_python_package_requirements`
+        Specify additional Python package requirements. Separate multiple files by comma
+        or space.
 
-        Default: :code:`.cpp.linters = cpplint clang_format`.
-
-:code:`.cpp.disable_linters = <...>`
-        Disable linters used for :file:`.cpp` files. Should be a list from the default
-        linters with the same format as :code:`.cpp.linters`.
-
-:code:`.py.linters = <...>`
-        Specify linters used for :file:`.py` files.
-
-        Default: :code:`.py.linters = pylint`.
-
-:code:`.py.disable_linters = <...>`
-        Disable linters used for :file:`.py` files. Should be a list from the default
-        linters with the same format as :code:`.py.linters`.
+        Default: :code:`None`.
 
 Example
 ~~~~~~~
@@ -254,32 +202,43 @@ A direct example is given as:
 .. code-block:: ini
 
         [target]
-        target_dir = .
-        target_suffix = .py
+        dirs = src scripts
+        suffixes = .cpp .py
 
-        [executable]
-        pylint = pylint
-        black = black
-        isort = isort
+        [.cpp]
+        enabled_linters = cpplint clang_format
+        
+        [.cpp:cpplint]
+        config_file = .github/linter-configs/CPPLINT.cfg
+
+        [.cpp.clang_format]
+        config_file = .github/linter-configs/.clang-format
+
+        [.py]
+        disabled_linters = flake8 mypy
+
+        [.py:pylint]
+        config_file = .github/linter-configs/.pylintrc
+
+        [.py:black]
+        config_file = .github/linter-configs/.black
+
+        [.py:isort]
+        config_file = .github/linter-configs/.isort.cfg
 
         [env]
         debug = True
-        .py.disable_linters = flake8 mypy
 
-The above example will only lint :file:`.py` files in the current working directory
-with only :code:`pylint`, :code:`black` and :code:`isort` linters as well as debugging
-mode enabled.
+The above example will lint :file:`.cpp` and :file:`.py` files in the :file:`src` and
+:file:`scripts` directories with :code:`cpplint` and :code:`clang_format` for
+:code:`.cpp` files, :code:`pylint`, :code:`black` and :code:`isort` linters for 
+:code:`.py` files as well as degugging mode enabled. Also custom configuration files for
+all enabled linters are given, which are generally cases when used in GitHub Action.
 
 Linter configurations
 ---------------------
 
-Configuration files for linters are given in :file:`LINTER_CONFIGS` of GitHub_ repository
+Example configuration files for linters are given in :file:`LINTER_CONFIGS` of GitHub_ repository
 as templates. You can modify them as you need.
 
 .. _GitHub: https://github.com/bowentan/glob-linters
-
-.. note::
-
-        If you use :program:`glob_linters` in GitHub action, please place configurations
-        in :file:`.github/linter-configs/` and do *NOT* change the name of the
-        configuration files.

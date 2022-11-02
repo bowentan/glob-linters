@@ -111,25 +111,28 @@ You can control the workflow by creating a configuration file named as
 .. code-block:: ini
 
         [target]
-        target_dir = .
-        target_suffix = .py
+        dirs = .
+        suffixes = .py
 
-        [executable]
-        cpplint = cpplint
-        clang_format = clang-format
-        pylint = pylint
-        flake8 = flake8
-        black = black
-        isort = isort
+        [.py]
+        enabled_linters = pylint black isort
+
+        [.py:pylint]
+        executable = pylint
+        config_file = .github/linter-configs/.pylintrc
+
+        [.py:black]
+        executable = black
+        config_file = .github/linter-configs/.black
 
         [env]
         debug = True
 
 This configuration will enable ``debug`` mode with additional information when running
 and set the directory that will be searched for linting ``.py`` files to be the
-root of your repository.
+root of your repository, using only ``pylint``, ``black`` and ``isort``.
 
-For more details about usage, please refer to the documentation.
+For more details about usage, please refer to the documentation usage.
 
 Contributing
 ------------

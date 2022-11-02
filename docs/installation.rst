@@ -32,11 +32,10 @@ You can either clone the public repository:
 
     $ git clone git://github.com/bowentan/glob-linters
 
-Or download the `tarball`_:
+Or download the source codes in `release page`_:
 
-.. code-block:: console
 
-    $ curl -OJL https://github.com/bowentan/glob-linters/tarball/main
+.. _`release page`: https://github.com/bowentan/glob-linters/releases
 
 Once you have a copy of the source, you can install it with:
 
