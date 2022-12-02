@@ -13,13 +13,13 @@ with open("CHANGELOG.md", encoding="utf-8") as changelog_file:
 setup_requirements = ["setuptools_scm"]
 
 requirements = [
-    "clang-format>=14.0.6",
-    "cpplint>=1.6.1",
-    "pylint>=2.15.2",
-    "flake8>=5.0.4",
-    "black>=22.8.0",
-    "isort>=5.10.1",
-    "mypy>=0.971",
+    "clang-format==14.0.6",
+    "cpplint==1.6.1",
+    "pylint==2.15.2",
+    "flake8==5.0.4",
+    "black==22.8.0",
+    "isort==5.10.1",
+    "mypy==0.971",
 ]
 
 test_requirements = [
