@@ -12,6 +12,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  if: ${{ github.actor != 'dependabot[bot]' }}
   test-python-package-publish:
     permissions:
       contents: read
