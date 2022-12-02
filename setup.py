@@ -15,7 +15,7 @@ setup_requirements = ["setuptools_scm"]
 requirements = [
     "clang-format==14.0.6",
     "cpplint==1.6.1",
-    "pylint==2.15.2",
+    "pylint==2.15.7",
     "flake8==5.0.4",
     "black==22.10.0",
     "isort==5.10.1",
