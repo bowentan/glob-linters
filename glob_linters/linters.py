@@ -225,5 +225,7 @@ class Mypy(Linter):
             logger.error("Found errors:")
             for err in self.stdout:
                 logger.error("\t%s", err)
+            for err in self.stderr:
+                logger.error("\t%s", err)
         else:
             logger.info("Check passed.")

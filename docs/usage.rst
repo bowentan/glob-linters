@@ -242,3 +242,15 @@ Example configuration files for linters are given in :file:`LINTER_CONFIGS` of G
 as templates. You can modify them as you need.
 
 .. _GitHub: https://github.com/bowentan/glob-linters
+
+
+Run as a Docker container
+-------------------------
+
+You can also use :program:`glob-linters` as a local Docker container by pulling the image and
+expose your workspace to the container, so as to test it as the GitHub action.
+
+.. code-block:: console
+
+        $ docker pull ghcr.io/bowentan/glob-linters:v0
+        $ docker run --name glob-linters-test --workdir /github/workspace --rm -v "<your workspace to be run against>":"/github/workspace" ghcr.io/bowentan/glob-linters:v0
