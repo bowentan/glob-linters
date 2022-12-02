@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.3.1](https://github.com/bowentan/glob-linters/compare/v0.3.0...v0.3.1) (2022-12-02)
+
+
+### Bug Fixes
+
+* add extension error loggings for mypy ([88280f1](https://github.com/bowentan/glob-linters/commit/88280f10ed9b1eacb3fd19326a5c562e9885628f))
+
+
+### Miscellaneous
+
+* **deps-dev:** bump tox from 3.26.0 to 3.27.1 ([#105](https://github.com/bowentan/glob-linters/issues/105)) ([de0791f](https://github.com/bowentan/glob-linters/commit/de0791f70cc01c00599148eed4b870f0825ddb43))
+* **deps-dev:** bump twine from 4.0.1 to 4.0.2 ([#106](https://github.com/bowentan/glob-linters/issues/106)) ([d813fa8](https://github.com/bowentan/glob-linters/commit/d813fa86a8151f7d1d5ae08b9d71421077c85c62))
+* **deps:** bump actions/setup-python from 3 to 4 ([#98](https://github.com/bowentan/glob-linters/issues/98)) ([92817e0](https://github.com/bowentan/glob-linters/commit/92817e0a6338b0970987e61616adc83f7c179ba5))
+* **deps:** bump black from 22.8.0 to 22.10.0 ([#107](https://github.com/bowentan/glob-linters/issues/107)) ([63ba577](https://github.com/bowentan/glob-linters/commit/63ba577e6144a94284a7c00a5382442fe76afafb))
+* **deps:** bump docker/build-push-action from 2.5.0 to 3.2.0 ([#99](https://github.com/bowentan/glob-linters/issues/99)) ([059134e](https://github.com/bowentan/glob-linters/commit/059134ee4fed632d207bf6ab1ab471fbe4be5bab))
+* **deps:** bump docker/login-action from 1.10.0 to 2.1.0 ([#102](https://github.com/bowentan/glob-linters/issues/102)) ([42fe5c8](https://github.com/bowentan/glob-linters/commit/42fe5c8d822543e42f4941fe6ebec34153000be0))
+* **deps:** bump docker/metadata-action from 3.3.0 to 4.1.1 ([#104](https://github.com/bowentan/glob-linters/issues/104)) ([acbfd60](https://github.com/bowentan/glob-linters/commit/acbfd60a470912cdffdae19a3ef0501432ce63ce))
+* **deps:** bump mypy from 0.971 to 0.991 ([#103](https://github.com/bowentan/glob-linters/issues/103)) ([2a8437f](https://github.com/bowentan/glob-linters/commit/2a8437f3fcb4e5fcffb2ddfc501138eeb277c9ca))
+* **deps:** bump pylint from 2.15.2 to 2.15.7 ([#100](https://github.com/bowentan/glob-linters/issues/100)) ([a13fb42](https://github.com/bowentan/glob-linters/commit/a13fb42096cce0f657f560a38dec0ccd4c4b9e37))
+* **deps:** bump python from 3.10.7-slim to 3.11.0-slim ([#97](https://github.com/bowentan/glob-linters/issues/97)) ([7d366a2](https://github.com/bowentan/glob-linters/commit/7d366a262e660a93257ccd23ffb793c4d74efa02))
+* **release-please:** add changelog-type ([#110](https://github.com/bowentan/glob-linters/issues/110)) ([56558f7](https://github.com/bowentan/glob-linters/commit/56558f7c91c6ad2944e3c89f2653c96455cd6e98))
+* **testpypi:** add condition ([#108](https://github.com/bowentan/glob-linters/issues/108)) ([e9d2e47](https://github.com/bowentan/glob-linters/commit/e9d2e47ac5b7b6f83ee3055344878929267413dc))
+* **testpypi:** change `if` position ([#109](https://github.com/bowentan/glob-linters/issues/109)) ([88eb324](https://github.com/bowentan/glob-linters/commit/88eb3243ea64fb38f79df1d52bdf0902a9505954))
+
 ## [0.3.0](https://github.com/bowentan/glob-linters/compare/v0.2.2...v0.3.0) (2022-11-02)
 
 
