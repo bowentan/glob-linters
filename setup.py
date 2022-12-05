@@ -16,7 +16,7 @@ requirements = [
     "clang-format==15.0.4",
     "cpplint==1.6.1",
     "pylint==2.15.7",
-    "flake8==5.0.4",
+    "flake8==6.0.0",
     "black==22.10.0",
     "isort==5.10.1",
     "mypy==0.991",
