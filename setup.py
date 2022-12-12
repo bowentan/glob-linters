@@ -17,7 +17,7 @@ requirements = [
     "cpplint==1.6.1",
     "pylint==2.15.7",
     "flake8==6.0.0",
-    "black==22.10.0",
+    "black==22.12.0",
     "isort==5.10.1",
     "mypy==0.991",
 ]
