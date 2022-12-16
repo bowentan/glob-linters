@@ -8,4 +8,4 @@ pytest==7.2.0
 black==22.12.0
 tox==4.0.8
 sphinx_mdinclude==0.5.3
-furo==2022.9.29
+furo==2022.12.7
