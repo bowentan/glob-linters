@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.3.2](https://github.com/bowentan/glob-linters/compare/v0.3.1...v0.3.2) (2023-01-17)
+
+
+### Miscellaneous
+
+* **deps-dev:** bump pytest from 7.1.3 to 7.2.0 ([#113](https://github.com/bowentan/glob-linters/issues/113)) ([967041e](https://github.com/bowentan/glob-linters/commit/967041e552fb835cd48de58dcb9b6977c8e503ae))
+* **deps-dev:** bump sphinx from 5.1.1 to 5.3.0 ([#111](https://github.com/bowentan/glob-linters/issues/111)) ([93e4ad9](https://github.com/bowentan/glob-linters/commit/93e4ad9c3b5969b739d49b67daece7b46c9b1c2d))
+* **deps-dev:** bump sphinx from 5.3.0 to 6.1.1 ([#130](https://github.com/bowentan/glob-linters/issues/130)) ([5a3498b](https://github.com/bowentan/glob-linters/commit/5a3498b214134ee87e32ceba5aaf4a0b71623902))
+* **deps-dev:** bump tox from 3.27.1 to 4.0.8 ([#121](https://github.com/bowentan/glob-linters/issues/121)) ([95d5b7f](https://github.com/bowentan/glob-linters/commit/95d5b7ffb8005692904bd7512e2bd4406e17c320))
+* **deps-dev:** bump tox from 4.0.8 to 4.1.2 ([#129](https://github.com/bowentan/glob-linters/issues/129)) ([a6a8027](https://github.com/bowentan/glob-linters/commit/a6a80273eadc95c0b7975d01f1030552e78ddab0))
+* **deps-dev:** bump watchdog from 2.1.9 to 2.2.0 ([#118](https://github.com/bowentan/glob-linters/issues/118)) ([5718ab0](https://github.com/bowentan/glob-linters/commit/5718ab0e60adb36cbe55e75d17eb517c57405603))
+* **deps-dev:** bump watchdog from 2.2.0 to 2.2.1 ([#133](https://github.com/bowentan/glob-linters/issues/133)) ([d590776](https://github.com/bowentan/glob-linters/commit/d5907762e7e43d9706abe0327407e48715422532))
+* **deps:** bump black from 22.10.0 to 22.12.0 ([#120](https://github.com/bowentan/glob-linters/issues/120)) ([792b5d8](https://github.com/bowentan/glob-linters/commit/792b5d8a6565f802ab7a52ccfb170112aa022aca))
+* **deps:** bump clang-format from 14.0.6 to 15.0.4 ([#114](https://github.com/bowentan/glob-linters/issues/114)) ([0a7aba4](https://github.com/bowentan/glob-linters/commit/0a7aba4e578f226f7c5cd6e62aded00539e10b08))
+* **deps:** bump clang-format from 15.0.4 to 15.0.6 ([#123](https://github.com/bowentan/glob-linters/issues/123)) ([0f28478](https://github.com/bowentan/glob-linters/commit/0f28478b99450ad60856c12765349d76745f2a04))
+* **deps:** bump flake8 from 5.0.4 to 6.0.0 ([#112](https://github.com/bowentan/glob-linters/issues/112)) ([317510f](https://github.com/bowentan/glob-linters/commit/317510f2f9f2c3868501d359e2f68ae4ed182650))
+* **deps:** bump furo from 2022.9.29 to 2022.12.7 ([#117](https://github.com/bowentan/glob-linters/issues/117)) ([3be8524](https://github.com/bowentan/glob-linters/commit/3be8524f99c6146db95f83807f51f8889c2a7c97))
+* **deps:** bump isort from 5.10.1 to 5.11.4 ([#127](https://github.com/bowentan/glob-linters/issues/127)) ([c1be1cc](https://github.com/bowentan/glob-linters/commit/c1be1ccf2eebed7c0b5a407523542330e2772b89))
+* **deps:** bump pylint from 2.15.7 to 2.15.8 ([#119](https://github.com/bowentan/glob-linters/issues/119)) ([d0ef11f](https://github.com/bowentan/glob-linters/commit/d0ef11fdf0b0aec942f85303aa517a5a6dcf5c12))
+* **deps:** bump pylint from 2.15.8 to 2.15.9 ([#122](https://github.com/bowentan/glob-linters/issues/122)) ([53f772c](https://github.com/bowentan/glob-linters/commit/53f772ceb08e6b45254d1419d7a6805fdf57768d))
+* **deps:** bump pylint from 2.15.9 to 2.15.10 ([#139](https://github.com/bowentan/glob-linters/issues/139)) ([25b9fde](https://github.com/bowentan/glob-linters/commit/25b9fde97077abd1357d4aa61409e0ac5816cbe7))
+* **deps:** bump python from 3.11.0-slim to 3.11.1-slim ([#116](https://github.com/bowentan/glob-linters/issues/116)) ([02a4baf](https://github.com/bowentan/glob-linters/commit/02a4baf3ac164e62eb69b3332d81f6ad3b0ad997))
+
 ## [0.3.1](https://github.com/bowentan/glob-linters/compare/v0.3.0...v0.3.1) (2022-12-02)
 
 
