@@ -12,7 +12,7 @@ glob-linters
 
 ..
   x-release-please-start-version
-.. image:: https://github.com/bowentan/glob-linters/actions/workflows/build-publish.yml/badge.svg?branch=v0.3.1
+.. image:: https://github.com/bowentan/glob-linters/actions/workflows/build-publish.yml/badge.svg?branch=v0.3.2
         :target: https://github.com/bowentan/glob-linters/actions/workflows/build-publish.yml
         :alt: Build and publish
 ..
