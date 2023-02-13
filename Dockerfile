@@ -1,4 +1,4 @@
-FROM python:3.11.1-slim
+FROM python:3.11.2-slim
 
 LABEL org.opencontainers.image.source https://github.com/bowentan/glob-linters
 
