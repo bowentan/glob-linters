@@ -4,7 +4,7 @@ watchdog==2.2.1
 flake8==6.0.0
 Sphinx==6.1.1
 twine==4.0.2
-pytest==7.2.0
+pytest==7.3.1
 black==22.12.0
 tox==4.1.2
 sphinx_mdinclude==0.5.3
